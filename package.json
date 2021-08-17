@@ -1,0 +1,28 @@
+{
+  "name": "js-ray",
+  "version": "1.0.0",
+  "description": "JS implementation of 'The Ray tracer challenge' (https://pragprog.com/book/jbtracer/the-ray-tracer-challenge)",
+  "main": "main.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/amatla/js-ray.git"
+  },
+  "author": "amatla",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/amatla/js-ray/issues"
+  },
+  "homepage": "https://github.com/amatla/js-ray#readme",
+  "devDependencies": {
+    "eslint": "^7.32.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.24.0",
+    "eslint-plugin-prettier": "^3.4.0",
+    "jest": "^27.0.6",
+    "prettier": "2.3.2"
+  }
+}
