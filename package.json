@@ -4,7 +4,7 @@
   "description": "JS implementation of 'The Ray tracer challenge' (https://pragprog.com/book/jbtracer/the-ray-tracer-challenge)",
   "main": "main.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest --verbose"
   },
   "repository": {
     "type": "git",
