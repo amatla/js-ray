@@ -1,7 +1,12 @@
+const utils = require('./utils');
 /**
  * @class Tuple
  */
 class Tuple {
+  static get Type() {
+    return { Point: 1.0, Vector: 0.0 };
+  }
+
   /**
    *
    * @constructor
@@ -17,36 +22,52 @@ class Tuple {
     this.w = w < 1.0 ? 0 : 1.0;
   }
   /**
-   *
+   * returns a new Point
    * @param {Number} x
    * @param {Number} y
    * @param {Number} z
    * @returns {Tuple}
    */
 
-  static point(x = 0, y = 0, z = 0) {
+  static getPoint(x = 0, y = 0, z = 0) {
     return new Tuple(x, y, z, 1.0);
   }
 
   /**
-   *
+   * returns a new Vector
    * @param {Number} x
    * @param {Number} y
    * @param {Number} z
    * @returns {Tuple}
    */
 
-  static vector(x = 0, y = 0, z = 0) {
+  static getVector(x = 0, y = 0, z = 0) {
     return new Tuple(x, y, z, 0.0);
   }
 
+  static compare(a, b) {
+    return (
+      typeof a === typeof b &&
+      utils.equal(a.x, b.x) &&
+      utils.equal(a.y, b.y) &&
+      utils.equal(a.z, b.z) &&
+      a.type === b.type
+    );
+  }
+
   /**
+   * returns the tuple's type
    * @returns {String}
    */
 
   get type() {
-    return this.w === 1.0 ? 'point' : 'vector';
+    return this.w;
+  }
+
+  typeToString() {
+    return this.w === 1 ? 'Point' : 'Vector';
   }
 }
-
+const t = Tuple.getPoint();
+console.log(t.typeToString());
 module.exports = Tuple;
