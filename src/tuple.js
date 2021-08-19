@@ -3,12 +3,7 @@ const utils = require('./utils');
  * @class Tuple
  */
 class Tuple {
-  static get Type() {
-    return { Point: 1.0, Vector: 0.0 };
-  }
-
   /**
-   *
    * @constructor
    * @param {Number} x
    * @param {Number} x
@@ -21,6 +16,14 @@ class Tuple {
     this.z = z;
     this.w = w < 1.0 ? 0 : 1.0;
   }
+
+  /**
+   * @returns {Object} - returns Tuple's type as a object
+   */
+  static get Type() {
+    return { Point: 1.0, Vector: 0.0 };
+  }
+
   /**
    * returns a new Point
    * @param {Number} x
@@ -28,7 +31,6 @@ class Tuple {
    * @param {Number} z
    * @returns {Tuple}
    */
-
   static getPoint(x = 0, y = 0, z = 0) {
     return new Tuple(x, y, z, 1.0);
   }
@@ -40,14 +42,20 @@ class Tuple {
    * @param {Number} z
    * @returns {Tuple}
    */
-
   static getVector(x = 0, y = 0, z = 0) {
     return new Tuple(x, y, z, 0.0);
   }
 
+  /**
+   * Compares two tuple and return true if they are of the same type and the values of each component are the same
+   * @param {Tuple} a
+   * @param {Tuple} b
+   * @returns {boolean}
+   */
   static compare(a, b) {
     return (
-      typeof a === typeof b &&
+      a instanceof Tuple &&
+      b instanceof Tuple &&
       utils.equal(a.x, b.x) &&
       utils.equal(a.y, b.y) &&
       utils.equal(a.z, b.z) &&
@@ -55,19 +63,29 @@ class Tuple {
     );
   }
 
-  /**
-   * returns the tuple's type
-   * @returns {String}
-   */
+  static add(a, b) {
+    if (a.type === Tuple.Type.Point && b.type === Tuple.Type.Point) {
+      throw new Error("Can't add two points");
+    }
+    return new Tuple(a.x + b.x, a.y + b.y, a.z + b.z, a.w + b.w);
+  }
 
+  /**
+   * returns the Tuple's type as a number
+   * @returns {Number}
+   */
   get type() {
     return this.w;
   }
 
+  /**
+   * returns the Tuple's type as a string
+   * @returns {String}
+   */
   typeToString() {
     return this.w === 1 ? 'Point' : 'Vector';
   }
 }
-const t = Tuple.getPoint();
-console.log(t.typeToString());
+const t = new Tuple();
+console.log(typeof t);
 module.exports = Tuple;
