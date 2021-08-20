@@ -102,4 +102,16 @@ describe('Tuple', () => {
       new Tuple(-1, 2, -3, Tuple.Type.Vector),
     );
   });
+  test('Scalar multiplication:', () => {
+    const t = new Tuple(1, -2, 3, Tuple.Type.Vector);
+    expect(t.multiply(3.5)).toEqual(
+      new Tuple(3.5, -7, 10.5, Tuple.Type.Vector),
+    );
+  });
+  test('Division', () => {
+    const t = new Tuple(1, -2, 3, Tuple.Type.Vector);
+    expect(t.divideBy(2)).toEqual(
+      new Tuple(0.5, -1, 1.5, Tuple.Type.Vector),
+    );
+  });
 });

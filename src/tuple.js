@@ -103,8 +103,39 @@ class Tuple {
     return this.w === 1 ? 'Point' : 'Vector';
   }
 
+  /**
+   * @returns {Tuple}
+   */
   negate() {
     return new Tuple(-this.x, -this.y, -this.z, this.w);
+  }
+
+  /**
+   *
+   * @param {Number} scalar
+   * @returns {Tuple}
+   */
+  multiply(scalar) {
+    return new Tuple(
+      this.x * scalar,
+      this.y * scalar,
+      this.z * scalar,
+      this.w,
+    );
+  }
+
+  /**
+   *
+   * @param {Number} scalar
+   * @returns {Tuple}
+   */
+  divideBy(scalar) {
+    return new Tuple(
+      this.x / scalar,
+      this.y / scalar,
+      this.z / scalar,
+      this.w,
+    );
   }
 }
 module.exports = Tuple;
