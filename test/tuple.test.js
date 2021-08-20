@@ -31,13 +31,13 @@ describe('Tuple', () => {
       expect(t).toEqual(new Tuple(4, -4, 3, Tuple.Type.Vector));
     });
   });
-  test('equality', () => {
+  test('Equality', () => {
     const a = new Tuple(4.3, -4.2, 3.1, 1.0);
     const b = new Tuple(4.3, -4.2, 3.1, 1.0);
     expect(Tuple.compare(a, b)).toBe(true);
     expect(Tuple.compare(a, b)).not.toBe(false);
   });
-  test('inequality', () => {
+  test('Inequality', () => {
     const a = new Tuple(4.2, -4.1, 3.2, 0.0);
     const b = new Tuple(4.3, -4.2, 3.1, 1.0);
     expect(Tuple.compare(a, b)).toBe(false);
@@ -95,5 +95,11 @@ describe('Tuple', () => {
         "Can't subtract a point from a vector",
       );
     });
+  });
+  test('Negation:', () => {
+    const t = new Tuple(1, -2, 3, Tuple.Type.Vector);
+    expect(t.negate()).toEqual(
+      new Tuple(-1, 2, -3, Tuple.Type.Vector),
+    );
   });
 });

@@ -63,6 +63,11 @@ class Tuple {
     );
   }
 
+  /**
+   * @param {Tuple} a
+   * @param {Tuple} b
+   * @returns {Tuple}
+   */
   static add(a, b) {
     if (a.type === Tuple.Type.Point && b.type === Tuple.Type.Point) {
       throw new Error("Can't add two points");
@@ -70,6 +75,11 @@ class Tuple {
     return new Tuple(a.x + b.x, a.y + b.y, a.z + b.z, a.w + b.w);
   }
 
+  /**
+   * @param {Tuple} a
+   * @param {Tuple} b
+   * @returns {Tuple}
+   */
   static subctract(a, b) {
     if (a.type === Tuple.Type.Vector && b.type === Tuple.Type.Point) {
       throw new Error("Can't subtract a point from a vector");
@@ -91,6 +101,10 @@ class Tuple {
    */
   typeToString() {
     return this.w === 1 ? 'Point' : 'Vector';
+  }
+
+  negate() {
+    return new Tuple(-this.x, -this.y, -this.z, this.w);
   }
 }
 module.exports = Tuple;
