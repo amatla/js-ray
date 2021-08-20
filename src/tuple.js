@@ -70,6 +70,13 @@ class Tuple {
     return new Tuple(a.x + b.x, a.y + b.y, a.z + b.z, a.w + b.w);
   }
 
+  static subctract(a, b) {
+    if (a.type === Tuple.Type.Vector && b.type === Tuple.Type.Point) {
+      throw new Error("Can't subtract a point from a vector");
+    }
+    return new Tuple(a.x - b.x, a.y - b.y, a.z - b.z, a.w - b.w);
+  }
+
   /**
    * returns the Tuple's type as a number
    * @returns {Number}
@@ -86,6 +93,4 @@ class Tuple {
     return this.w === 1 ? 'Point' : 'Vector';
   }
 }
-const t = new Tuple();
-console.log(typeof t);
 module.exports = Tuple;

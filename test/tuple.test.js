@@ -43,25 +43,57 @@ describe('Tuple', () => {
     expect(Tuple.compare(a, b)).toBe(false);
     expect(Tuple.compare(a, b)).not.toBe(true);
   });
-  test('addition:', () => {
-    const t1 = new Tuple(3, -2, 5, Tuple.Type.Point);
-    const t2 = new Tuple(-2, 3, 1, Tuple.Type.Vector);
-    expect(Tuple.add(t1, t2)).toEqual(
-      new Tuple(1, 1, 6, Tuple.Type.Point),
-    );
+  describe('Addition:', () => {
+    test('adding tuple to tuple:', () => {
+      const a = new Tuple(3, -2, 5, Tuple.Type.Point);
+      const b = new Tuple(-2, 3, 1, Tuple.Type.Vector);
+      expect(Tuple.add(a, b)).toEqual(
+        new Tuple(1, 1, 6, Tuple.Type.Point),
+      );
+    });
+    test('adding vector to vector:', () => {
+      const a = new Tuple(3, -2, 5, Tuple.Type.Vector);
+      const b = new Tuple(-2, 3, 1, Tuple.Type.Vector);
+      expect(Tuple.add(a, b)).toEqual(
+        new Tuple(1, 1, 6, Tuple.Type.Vector),
+      );
+    });
+    test('adding point to point:', () => {
+      const a = new Tuple(3, -2, 5, Tuple.Type.Point);
+      const b = new Tuple(-2, 3, 1, Tuple.Type.Point);
+      expect(() => Tuple.add(a, b)).toThrowError(
+        "Can't add two points",
+      );
+    });
   });
-  test('adding vector to vector:', () => {
-    const t1 = new Tuple(3, -2, 5, Tuple.Type.Vector);
-    const t2 = new Tuple(-2, 3, 1, Tuple.Type.Vector);
-    expect(Tuple.add(t1, t2)).toEqual(
-      new Tuple(1, 1, 6, Tuple.Type.Vector),
-    );
-  });
-  test('adding point to point:', () => {
-    const t1 = new Tuple(3, -2, 5, Tuple.Type.Point);
-    const t2 = new Tuple(-2, 3, 1, Tuple.Type.Point);
-    expect(() => Tuple.add(t1, t2)).toThrowError(
-      "Can't add two points",
-    );
+  describe('Subtraction:', () => {
+    test('Subctracting two points:', () => {
+      const a = Tuple.getPoint(3, 2, 1);
+      const b = Tuple.getPoint(5, 6, 7);
+      expect(Tuple.subctract(a, b)).toEqual(
+        Tuple.getVector(-2, -4, -6),
+      );
+    });
+    test('Subtracting a vector from a point', () => {
+      const a = Tuple.getPoint(3, 2, 1);
+      const b = Tuple.getVector(5, 6, 7);
+      expect(Tuple.subctract(a, b)).toEqual(
+        Tuple.getPoint(-2, -4, -6),
+      );
+    });
+    test('Subtracting two vectors', () => {
+      const a = Tuple.getVector(3, 2, 1);
+      const b = Tuple.getVector(5, 6, 7);
+      expect(Tuple.subctract(a, b)).toEqual(
+        Tuple.getVector(-2, -4, -6),
+      );
+    });
+    test('Subtracting a point from a vector', () => {
+      const a = Tuple.getVector(3, 2, 1);
+      const b = Tuple.getPoint(5, 6, 7);
+      expect(() => Tuple.subctract(a, b)).toThrowError(
+        "Can't subtract a point from a vector",
+      );
+    });
   });
 });
