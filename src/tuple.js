@@ -137,5 +137,28 @@ class Tuple {
       this.w,
     );
   }
+
+  /**
+   *@returns{Number}
+   */
+  get magnitude() {
+    return Math.sqrt(
+      this.x * this.x + this.y * this.y + this.z * this.z,
+    );
+  }
+
+  /**
+   * @returns {Number}
+   */
+  normalize() {
+    const mag = this.magnitude;
+    return new Tuple(
+      this.x / mag,
+      this.y / mag,
+      this.z / mag,
+      this.w,
+    );
+  }
 }
+
 module.exports = Tuple;

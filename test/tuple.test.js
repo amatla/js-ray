@@ -114,4 +114,43 @@ describe('Tuple', () => {
       new Tuple(0.5, -1, 1.5, Tuple.Type.Vector),
     );
   });
+  describe('Magnitude:', () => {
+    test('Vector (1, 0, 0)', () => {
+      const t = new Tuple(1, 0, 0, Tuple.Type.Vector);
+      expect(t.magnitude).toEqual(1);
+    });
+    test('Vector (0, 1, 0)', () => {
+      const t = new Tuple(0, 1, 0, Tuple.Type.Vector);
+      expect(t.magnitude).toEqual(1);
+    });
+    test('Vector (0, 0, 1)', () => {
+      const t = new Tuple(0, 0, 1, Tuple.Type.Vector);
+      expect(t.magnitude).toEqual(1);
+    });
+    test('Vector (1, 2, 3)', () => {
+      const t = new Tuple(1, 2, 3, Tuple.Type.Vector);
+      expect(t.magnitude).toEqual(Math.sqrt(14));
+    });
+    test('Vector (-1, -2, -3)', () => {
+      const t = new Tuple(-1, -2, -3, Tuple.Type.Vector);
+      expect(t.magnitude).toEqual(Math.sqrt(14));
+    });
+  });
+  describe('Normalization:', () => {
+    test('Vector (4, 0, 0)', () => {
+      const t = new Tuple(4, 0, 0, Tuple.Type.Vector);
+      expect(t.normalize()).toEqual(Tuple.getVector(1, 0, 0));
+    });
+    test('Vector (1, 2, 3)', () => {
+      const t = new Tuple(1, 2, 3, Tuple.Type.Vector);
+      const d = Math.sqrt(14);
+      expect(t.normalize()).toEqual(
+        Tuple.getVector(1 / d, 2 / d, 3 / d),
+      );
+    });
+    test('Magnitude of a normalized vector:', () => {
+      const t = new Tuple(1, 2, 4, Tuple.Type.Vector);
+      expect(t.normalize().magnitude).toBe(1);
+    });
+  });
 });
