@@ -88,6 +88,39 @@ class Tuple {
   }
 
   /**
+   *
+   * @param {Tuple} a
+   * @param {Tuple} b
+   * @returns {Number}
+   */
+  static dotProduct(a, b) {
+    if (a.type === Tuple.Type.Point || b.type === Tuple.Type.Point)
+      throw new Error(
+        "Can't calculate the dot product of two points. Use vectors instead.",
+      );
+    return a.x * b.x + a.y * b.y + a.z * b.z;
+  }
+
+  /**
+   *
+   * @param {Tuple} a
+   * @param {Tuple} b
+   * @returns {Tuple}
+   */
+  static crossProduct(a, b) {
+    if (a.type === Tuple.Type.Point || b.type === Tuple.Type.Point)
+      throw new Error(
+        "Can't calculate the cross product of two points. Use vectors instead.",
+      );
+    return new Tuple(
+      a.y * b.z - a.z * b.y,
+      a.z * b.x - a.x * b.z,
+      a.x * b.y - a.y * b.x,
+      Tuple.Type.Vector,
+    );
+  }
+
+  /**
    * returns the Tuple's type as a number
    * @returns {Number}
    */
@@ -142,6 +175,8 @@ class Tuple {
    *@returns{Number}
    */
   get magnitude() {
+    if (this.w === Tuple.Type.Point)
+      throw new Error('Points have no magnitude. Use vector instead');
     return Math.sqrt(
       this.x * this.x + this.y * this.y + this.z * this.z,
     );

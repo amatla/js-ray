@@ -135,6 +135,12 @@ describe('Tuple', () => {
       const t = new Tuple(-1, -2, -3, Tuple.Type.Vector);
       expect(t.magnitude).toEqual(Math.sqrt(14));
     });
+    test('Point (1, 2, 3)', () => {
+      const t = new Tuple(1, 2, 3, Tuple.Type.Point);
+      expect(() => t.magnitude).toThrowError(
+        'Points have no magnitude. Use vector instead',
+      );
+    });
   });
   describe('Normalization:', () => {
     test('Vector (4, 0, 0)', () => {
@@ -151,6 +157,45 @@ describe('Tuple', () => {
     test('Magnitude of a normalized vector:', () => {
       const t = new Tuple(1, 2, 4, Tuple.Type.Vector);
       expect(t.normalize().magnitude).toBe(1);
+    });
+    test('Point (1, 2, 3)', () => {
+      const t = new Tuple(1, 2, 3, Tuple.Type.Point);
+      expect(() => t.normalize()).toThrowError(
+        'Points have no magnitude. Use vector instead',
+      );
+    });
+  });
+  describe('Dot product', () => {
+    test('Dot product of two vectors:', () => {
+      const a = Tuple.getVector(1, 2, 3);
+      const b = Tuple.getVector(2, 3, 4);
+      expect(Tuple.dotProduct(a, b)).toBe(20);
+    });
+    test('Dot product with points:', () => {
+      const a = Tuple.getVector(1, 2, 3);
+      const b = Tuple.getPoint(2, 3, 4);
+      expect(() => Tuple.dotProduct(a, b)).toThrowError(
+        "Can't calculate the dot product of two points. Use vectors instead.",
+      );
+    });
+  });
+  describe('Cross product', () => {
+    test('Cross product of two vectors:', () => {
+      const a = Tuple.getVector(1, 2, 3);
+      const b = Tuple.getVector(2, 3, 4);
+      expect(Tuple.crossProduct(a, b)).toEqual(
+        Tuple.getVector(-1, 2, -1),
+      );
+      expect(Tuple.crossProduct(b, a)).toEqual(
+        Tuple.getVector(1, -2, 1),
+      );
+    });
+    test('Cross product with points:', () => {
+      const a = Tuple.getVector(1, 2, 3);
+      const b = Tuple.getPoint(2, 3, 4);
+      expect(() => Tuple.crossProduct(a, b)).toThrowError(
+        "Can't calculate the cross product of two points. Use vectors instead.",
+      );
     });
   });
 });
