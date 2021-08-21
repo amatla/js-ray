@@ -10,11 +10,15 @@ class Tuple {
    * @param {Number} y
    * @param {Number} w
    */
-  constructor(x = 0, y = 0, z = 0, w = 1.0) {
+  constructor(x = 0, y = 0, z = 0, w = Tuple.Type.Point) {
+    if (w !== Tuple.Type.Point && w !== Tuple.Type.Vector)
+      throw new Error(
+        'Can only create tuples with w = Tuple.Type.Point or w = Tuple.Type.Vector',
+      );
     this.x = x;
     this.y = y;
     this.z = z;
-    this.w = w < 1.0 ? 0 : 1.0;
+    this.w = w;
   }
 
   /**
