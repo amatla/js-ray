@@ -1,3 +1,4 @@
+const RayError = require('../src/errors');
 const Tuple = require('../src/tuple');
 
 describe('Tuple', () => {
@@ -30,6 +31,12 @@ describe('Tuple', () => {
       const t = Tuple.getVector(4, -4, 3);
       expect(t).toEqual(new Tuple(4, -4, 3, Tuple.Type.Vector));
     });
+    test('constructor with wrong type', () => {
+      expect(() => new Tuple(1, 2, 3, 4)).toThrow(RayError);
+      expect(() => new Tuple(1, 2, 3, 4)).toThrow(
+        'ray001 -- Invalid Type: Can only create tuples with w = Tuple.Type.Point or w = Tuple.Type.Vector',
+      );
+    });
   });
   test('Equality', () => {
     const a = new Tuple(4.3, -4.2, 3.1, 1.0);
@@ -61,8 +68,9 @@ describe('Tuple', () => {
     test('adding point to point:', () => {
       const a = new Tuple(3, -2, 5, Tuple.Type.Point);
       const b = new Tuple(-2, 3, 1, Tuple.Type.Point);
+      expect(() => Tuple.add(a, b)).toThrowError(RayError);
       expect(() => Tuple.add(a, b)).toThrowError(
-        "Can't add two points",
+        "ray002 -- Invalid Operation: Can't add two points",
       );
     });
   });
@@ -91,8 +99,9 @@ describe('Tuple', () => {
     test('Subtracting a point from a vector', () => {
       const a = Tuple.getVector(3, 2, 1);
       const b = Tuple.getPoint(5, 6, 7);
-      expect(() => Tuple.subctract(a, b)).toThrowError(
-        "Can't subtract a point from a vector",
+      expect(() => Tuple.subctract(a, b)).toThrow(RayError);
+      expect(() => Tuple.subctract(a, b)).toThrow(
+        "ray002 -- Invalid Operation: Can't subtract a point from a vector",
       );
     });
   });
@@ -137,7 +146,7 @@ describe('Tuple', () => {
     });
     test('Point (1, 2, 3)', () => {
       const t = new Tuple(1, 2, 3, Tuple.Type.Point);
-      expect(() => t.magnitude).toThrowError(
+      expect(() => t.magnitude).toThrow(
         'Points have no magnitude. Use vector instead',
       );
     });
@@ -160,7 +169,7 @@ describe('Tuple', () => {
     });
     test('Point (1, 2, 3)', () => {
       const t = new Tuple(1, 2, 3, Tuple.Type.Point);
-      expect(() => t.normalize()).toThrowError(
+      expect(() => t.normalize()).toThrow(
         'Points have no magnitude. Use vector instead',
       );
     });
@@ -174,8 +183,9 @@ describe('Tuple', () => {
     test('Dot product with points:', () => {
       const a = Tuple.getVector(1, 2, 3);
       const b = Tuple.getPoint(2, 3, 4);
-      expect(() => Tuple.dotProduct(a, b)).toThrowError(
-        "Can't calculate the dot product of two points. Use vectors instead.",
+      expect(() => Tuple.dotProduct(a, b)).toThrow(RayError);
+      expect(() => Tuple.dotProduct(a, b)).toThrow(
+        "ray002 -- Invalid Operation: Can't calculate the dot product of two points. Use vectors instead.",
       );
     });
   });
@@ -193,8 +203,9 @@ describe('Tuple', () => {
     test('Cross product with points:', () => {
       const a = Tuple.getVector(1, 2, 3);
       const b = Tuple.getPoint(2, 3, 4);
-      expect(() => Tuple.crossProduct(a, b)).toThrowError(
-        "Can't calculate the cross product of two points. Use vectors instead.",
+      expect(() => Tuple.crossProduct(a, b)).toThrow(RayError);
+      expect(() => Tuple.crossProduct(a, b)).toThrow(
+        "ray002 -- Invalid Operation: Can't calculate the cross product of two points. Use vectors instead.",
       );
     });
   });

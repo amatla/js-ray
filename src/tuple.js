@@ -1,4 +1,5 @@
 const utils = require('./utils');
+const RayError = require('./errors');
 /**
  * @class Tuple
  */
@@ -12,7 +13,8 @@ class Tuple {
    */
   constructor(x = 0, y = 0, z = 0, w = Tuple.Type.Point) {
     if (w !== Tuple.Type.Point && w !== Tuple.Type.Vector)
-      throw new Error(
+      throw new RayError(
+        'ray001',
         'Can only create tuples with w = Tuple.Type.Point or w = Tuple.Type.Vector',
       );
     this.x = x;
@@ -74,7 +76,7 @@ class Tuple {
    */
   static add(a, b) {
     if (a.type === Tuple.Type.Point && b.type === Tuple.Type.Point) {
-      throw new Error("Can't add two points");
+      throw new RayError('ray002', "Can't add two points");
     }
     return new Tuple(a.x + b.x, a.y + b.y, a.z + b.z, a.w + b.w);
   }
@@ -86,7 +88,10 @@ class Tuple {
    */
   static subctract(a, b) {
     if (a.type === Tuple.Type.Vector && b.type === Tuple.Type.Point) {
-      throw new Error("Can't subtract a point from a vector");
+      throw new RayError(
+        'ray002',
+        "Can't subtract a point from a vector",
+      );
     }
     return new Tuple(a.x - b.x, a.y - b.y, a.z - b.z, a.w - b.w);
   }
@@ -99,7 +104,8 @@ class Tuple {
    */
   static dotProduct(a, b) {
     if (a.type === Tuple.Type.Point || b.type === Tuple.Type.Point)
-      throw new Error(
+      throw new RayError(
+        'ray002',
         "Can't calculate the dot product of two points. Use vectors instead.",
       );
     return a.x * b.x + a.y * b.y + a.z * b.z;
@@ -113,7 +119,8 @@ class Tuple {
    */
   static crossProduct(a, b) {
     if (a.type === Tuple.Type.Point || b.type === Tuple.Type.Point)
-      throw new Error(
+      throw new RayError(
+        'ray002',
         "Can't calculate the cross product of two points. Use vectors instead.",
       );
     return new Tuple(
