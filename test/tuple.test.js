@@ -65,12 +65,21 @@ describe('Tuple', () => {
         new Tuple(1, 1, 6, Tuple.Type.Vector),
       );
     });
+    test('adding 3 tuples:', () => {
+      const a = new Tuple(3, -2, 5, Tuple.Type.Vector);
+      const b = new Tuple(-2, 3, 1, Tuple.Type.Vector);
+      const c = new Tuple(1, 1, 2, Tuple.Type.Point);
+      expect(Tuple.add(a, b, c)).toEqual(
+        new Tuple(2, 2, 8, Tuple.Type.Point),
+      );
+    });
     test('adding point to point:', () => {
       const a = new Tuple(3, -2, 5, Tuple.Type.Point);
-      const b = new Tuple(-2, 3, 1, Tuple.Type.Point);
-      expect(() => Tuple.add(a, b)).toThrowError(RayError);
-      expect(() => Tuple.add(a, b)).toThrowError(
-        "ray002 -- Invalid Operation: Can't add two points",
+      const b = new Tuple(-2, 3, 1, Tuple.Type.Vector);
+      const c = new Tuple(-2, 3, 1, Tuple.Type.Point);
+      expect(() => Tuple.add(a, b, c)).toThrowError(RayError);
+      expect(() => Tuple.add(a, b, c)).toThrowError(
+        "ray002 -- Invalid Operation: Can't add point to point",
       );
     });
   });
