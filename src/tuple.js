@@ -1,5 +1,9 @@
 const utils = require('./utils');
 const RayError = require('./errors');
+const constants = require('./constants');
+
+const { dPoints } = constants;
+
 /**
  * @class Tuple
  */
@@ -86,7 +90,12 @@ class Tuple {
       acc.w += curr.w;
       return acc;
     });
-    return new Tuple(sum.x, sum.y, sum.z, sum.w);
+    return new Tuple(
+      Number(sum.x.toFixed(dPoints)),
+      Number(sum.y.toFixed(dPoints)),
+      Number(sum.z.toFixed(dPoints)),
+      Number(sum.w.toFixed(dPoints)),
+    );
   }
 
   /**
@@ -104,14 +113,18 @@ class Tuple {
           'ray002',
           "Can't subtract a point from a vector",
         );
-      console.log(acc.type, curr.type);
       acc.x -= curr.x;
       acc.y -= curr.y;
       acc.z -= curr.z;
       acc.w -= curr.w;
       return acc;
     });
-    return new Tuple(diff.x, diff.y, diff.z, diff.w);
+    return new Tuple(
+      Number(diff.x.toFixed(dPoints)),
+      Number(diff.y.toFixed(dPoints)),
+      Number(diff.z.toFixed(dPoints)),
+      Number(diff.w.toFixed(dPoints)),
+    );
   }
 
   /**
