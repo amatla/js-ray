@@ -70,26 +70,14 @@ class Tuple {
   }
 
   /**
-   * @param {Tuple} a
-   * @param {Tuple} b
-   * @returns {Tuple}
-   */
-  // static add(a, b) {
-  //   if (a.type === Tuple.Type.Point && b.type === Tuple.Type.Point) {
-  //     throw new RayError('ray002', "Can't add two points");
-  //   }
-  //   return new Tuple(a.x + b.x, a.y + b.y, a.z + b.z, a.w + b.w);
-  // }
-
-  /**
    *
    * @param  {...Tuple} tuples
    * @returns {Tuple}
    */
   static add(...tuples) {
     let pCount = 0;
-    return tuples.reduce((acc, curr) => {
-      if (curr.type === Tuple.Type.Point) pCount += 1;
+    const sum = tuples.reduce((acc, curr) => {
+      if (acc.type === Tuple.Type.Point) pCount += 1;
       if (pCount === 2)
         throw new RayError('ray002', "Can't add point to point");
       acc.x += curr.x;
@@ -97,22 +85,33 @@ class Tuple {
       acc.z += curr.z;
       acc.w += curr.w;
       return acc;
-    }, new Tuple(0, 0, 0, Tuple.Type.Vector));
+    });
+    return new Tuple(sum.x, sum.y, sum.z, sum.w);
   }
 
   /**
-   * @param {Tuple} a
-   * @param {Tuple} b
+   *
+   * @param  {...Tuple} tuples
    * @returns {Tuple}
    */
-  static subctract(a, b) {
-    if (a.type === Tuple.Type.Vector && b.type === Tuple.Type.Point) {
-      throw new RayError(
-        'ray002',
-        "Can't subtract a point from a vector",
-      );
-    }
-    return new Tuple(a.x - b.x, a.y - b.y, a.z - b.z, a.w - b.w);
+  static subtract(...tuples) {
+    const diff = tuples.reduce((acc, curr) => {
+      if (
+        acc.type === Tuple.Type.Vector &&
+        curr.type === Tuple.Type.Point
+      )
+        throw new RayError(
+          'ray002',
+          "Can't subtract a point from a vector",
+        );
+      console.log(acc.type, curr.type);
+      acc.x -= curr.x;
+      acc.y -= curr.y;
+      acc.z -= curr.z;
+      acc.w -= curr.w;
+      return acc;
+    });
+    return new Tuple(diff.x, diff.y, diff.z, diff.w);
   }
 
   /**

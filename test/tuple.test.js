@@ -87,29 +87,37 @@ describe('Tuple', () => {
     test('Subctracting two points:', () => {
       const a = Tuple.getPoint(3, 2, 1);
       const b = Tuple.getPoint(5, 6, 7);
-      expect(Tuple.subctract(a, b)).toEqual(
+      expect(Tuple.subtract(a, b)).toEqual(
         Tuple.getVector(-2, -4, -6),
       );
     });
     test('Subtracting a vector from a point', () => {
       const a = Tuple.getPoint(3, 2, 1);
       const b = Tuple.getVector(5, 6, 7);
-      expect(Tuple.subctract(a, b)).toEqual(
+      expect(Tuple.subtract(a, b)).toEqual(
         Tuple.getPoint(-2, -4, -6),
       );
     });
     test('Subtracting two vectors', () => {
       const a = Tuple.getVector(3, 2, 1);
       const b = Tuple.getVector(5, 6, 7);
-      expect(Tuple.subctract(a, b)).toEqual(
+      expect(Tuple.subtract(a, b)).toEqual(
         Tuple.getVector(-2, -4, -6),
+      );
+    });
+    test('Subtracting three vectors', () => {
+      const a = Tuple.getVector(3, 2, 1);
+      const b = Tuple.getVector(5, 6, 7);
+      const c = Tuple.getVector(2, -2, -1);
+      expect(Tuple.subtract(a, b, c)).toEqual(
+        Tuple.getVector(-4, -2, -5),
       );
     });
     test('Subtracting a point from a vector', () => {
       const a = Tuple.getVector(3, 2, 1);
       const b = Tuple.getPoint(5, 6, 7);
-      expect(() => Tuple.subctract(a, b)).toThrow(RayError);
-      expect(() => Tuple.subctract(a, b)).toThrow(
+      expect(() => Tuple.subtract(a, b)).toThrow(RayError);
+      expect(() => Tuple.subtract(a, b)).toThrow(
         "ray002 -- Invalid Operation: Can't subtract a point from a vector",
       );
     });
