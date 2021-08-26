@@ -18,10 +18,8 @@ const Tuple = require('../src/tuple');
 
   function tick(env, proj) {
     const postion = Tuple.add(proj.position, proj.velocity);
-    const velocity = Tuple.add(
-      Tuple.add(proj.velocity, env.gravity),
-      env.wind,
-    );
+    const velocity = Tuple.add(proj.velocity, env.gravity, env.wind);
+
     return new Projectile(postion, velocity);
   }
 
