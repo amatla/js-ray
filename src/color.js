@@ -98,7 +98,4 @@ class Color {
   }
 }
 
-const c1 = new Color(0.6, 0.6, 0.75);
-const c2 = new Color(0.1, 0.3, 0.25);
-console.log(Color.subtract(c1, c2));
 module.exports = Color;
