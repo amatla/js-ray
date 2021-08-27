@@ -76,6 +76,19 @@ class Color {
     );
   }
 
+  static get BLACK() {
+    return new Color(0, 0, 0);
+  }
+
+  static get WHITE() {
+    return new Color(1, 1, 1);
+  }
+
+  /**
+   *
+   * @param {Number} num
+   * @returns {Color}
+   */
   multiply(num) {
     return new Color(
       Number((this.red * num).toFixed(dPoints)),
