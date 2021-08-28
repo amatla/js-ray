@@ -18,4 +18,24 @@ describe('Canvas:', () => {
     c.writePixel(2, 3, red);
     expect(c.pixelAt(2, 3)).toEqual(new Color(1, 0, 0));
   });
+  test('PPM header', () => {
+    const c = new Canvas(5, 3);
+    const header = c.toPPM().split('\n');
+    expect(header[0]).toBe('P3');
+    expect(header[1]).toBe('5 3');
+    expect(header[2]).toBe('255');
+  });
+  test('PPM pixel data:', () => {
+    const c = new Canvas(5, 3);
+    const c1 = new Color(1.5, 0, 0);
+    const c2 = new Color(0, 0.5, 0);
+    const c3 = new Color(-0.5, 0, 1);
+    c.writePixel(0, 0, c1);
+    c.writePixel(2, 1, c2);
+    c.writePixel(4, 2, c3);
+    const pixels = c.ppmPixelData;
+    expect(pixels[0]).toBe('255 0 0 0 0 0 0 0 0 0 0 0 0 0 0');
+    expect(pixels[1]).toBe('0 0 0 0 0 0 0 128 0 0 0 0 0 0 0');
+    expect(pixels[2]).toBe('0 0 0 0 0 0 0 0 0 0 0 0 0 0 255');
+  });
 });

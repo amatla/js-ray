@@ -1,4 +1,3 @@
-const RayError = require('../src/errors');
 const Color = require('../src/color');
 
 describe('Color:', () => {
