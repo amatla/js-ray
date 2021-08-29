@@ -38,4 +38,25 @@ describe('Canvas:', () => {
     expect(pixels[1]).toBe('0 0 0 0 0 0 0 128 0 0 0 0 0 0 0');
     expect(pixels[2]).toBe('0 0 0 0 0 0 0 0 0 0 0 0 0 0 255');
   });
+  test('Splitting long lines:', () => {
+    const c = new Canvas(10, 2);
+    c.fill(new Color(1, 0.8, 0.6));
+    const pixels = c.ppmPixelData;
+    expect(pixels[0]).toBe(
+      '255 204 153 255 204 153 255 204 153 255 204 153 255 204 153 255 204',
+    );
+    expect(pixels[1]).toBe(
+      '153 255 204 153 255 204 153 255 204 153 255 204 153',
+    );
+    expect(pixels[2]).toBe(
+      '255 204 153 255 204 153 255 204 153 255 204 153 255 204 153 255 204',
+    );
+    expect(pixels[3]).toBe(
+      '153 255 204 153 255 204 153 255 204 153 255 204 153',
+    );
+  });
+  test('PPM terminated by a newline character:', () => {
+    const c = new Canvas(5, 3);
+    expect(c.toPPM().slice(-1)).toBe('\n');
+  });
 });
