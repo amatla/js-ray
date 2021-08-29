@@ -1,3 +1,4 @@
+const fs = require('fs');
 const Color = require('./color');
 const constants = require('./constants');
 const RayError = require('./errors');
@@ -157,6 +158,17 @@ class Canvas {
       if (line.length) ppmPixel.push(line.trimEnd());
     }
     return ppmPixel;
+  }
+
+  /**
+   * Writes PPM data to 'filename'
+   * @param {String} filename
+   */
+  writePPM(filename) {
+    fs.writeFile(filename, this.toPPM(), (err) => {
+      if (err) return console.error(err);
+      return console.log(`${filename} written successfully.`);
+    });
   }
 }
 
