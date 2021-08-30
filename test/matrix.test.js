@@ -15,5 +15,18 @@ describe('Matrix:', () => {
       expect(m.matrix[3][0]).toBe(13.5);
       expect(m.matrix[3][2]).toBe(15.5);
     });
+    test('Creating and inspecting a 2x2 matrix:', () => {
+      const m = new Matrix([-3, 5, 1, -2]);
+      expect(m.matrix[0][0]).toBe(-3);
+      expect(m.matrix[0][1]).toBe(5);
+      expect(m.matrix[1][0]).toBe(1);
+      expect(m.matrix[1][1]).toBe(-2);
+    });
+    test('Creating and inspecting a 3x3 matrix:', () => {
+      const m = new Matrix([-3, 5, 0, 1, -2, -7, 0, 1, 1]);
+      expect(m.matrix[0][0]).toBe(-3);
+      expect(m.matrix[1][1]).toBe(-2);
+      expect(m.matrix[2][2]).toBe(1);
+    });
   });
 });
