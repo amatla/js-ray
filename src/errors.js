@@ -3,6 +3,7 @@ class RayError extends Error {
     return {
       ray001: 'Invalid Type',
       ray002: 'Invalid Operation',
+      ray003: 'Invalid Size',
     };
   }
 

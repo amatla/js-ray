@@ -17,4 +17,12 @@ describe('RayError:', () => {
       throw new RayError('ray002', 'error message');
     }).toThrow('ray002 -- Invalid Operation: error message');
   });
+  test('Invalid Size:', () => {
+    expect(() => {
+      throw new RayError('ray003', 'error message');
+    }).toThrow(RayError);
+    expect(() => {
+      throw new RayError('ray003', 'error message');
+    }).toThrow('ray003 -- Invalid Size: error message');
+  });
 });
