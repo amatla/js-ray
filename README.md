@@ -8,5 +8,5 @@ by [Jamis Buck](https://github.com/jamis)
 
 <details open>
   <summary>Chapter 02</summary>
-  <img src="https://github.com/amatla/js-ray/blob/main/imgs/ch02.ppm">
+  ![alt text](https://github.com/amatla/js-ray/blob/main/ch02.ppm?raw=true)
 </details>
