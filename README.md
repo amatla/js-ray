@@ -7,6 +7,6 @@ A Test-Driven Guide to Your First 3D Renderer
 by [Jamis Buck](https://github.com/jamis)
 
 <details open>
-  <summary>Chapter 02</summary>
-  ![alt text](https://github.com/amatla/js-ray/blob/main/ch02.ppm?raw=true)
+    <summary>Chapter 02</summary>
+    <img src='./imgs/ch02.jpg' width='600'>
 </details>
