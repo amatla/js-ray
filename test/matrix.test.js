@@ -29,4 +29,24 @@ describe('Matrix:', () => {
       expect(m.matrix[2][2]).toBe(1);
     });
   });
+  describe('Equality:', () => {
+    test('Equal matrices:', () => {
+      const m = new Matrix([
+        1, 2, 3, 4, 5, 6, 7, 8, 9, 8, 7, 6, 5, 4, 3, 2,
+      ]);
+      const n = new Matrix([
+        1, 2, 3, 4, 5, 6, 7, 8, 9, 8, 7, 6, 5, 4, 3, 2,
+      ]);
+      expect(m.equals(n)).toBe(true);
+    });
+    test('Different matrices:', () => {
+      const m = new Matrix([
+        1, 2, 3, 4, 5, 6, 7, 8, 9, 8, 7, 6, 5, 4, 3, 2,
+      ]);
+      const n = new Matrix([
+        2, 3, 4, 5, 6, 7, 8, 9, 8, 7, 6, 5, 4, 3, 2, 1,
+      ]);
+      expect(m.equals(n)).toBe(false);
+    });
+  });
 });

@@ -63,6 +63,16 @@ class Matrix {
       .map((val) => ` | ${val.join(' | ')} | `)
       .join('\n');
   }
+
+  equals(mtx) {
+    if (!(mtx instanceof Matrix))
+      throw new RayError('ray001', `${mtx} is not a matrix.`);
+    if (this.size !== mtx.size) return false;
+
+    return this.matrix.every((row, y) =>
+      row.every((col, x) => col === mtx.matrix[y][x]),
+    );
+  }
 }
 
 module.exports = Matrix;
