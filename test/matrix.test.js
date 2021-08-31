@@ -65,12 +65,24 @@ describe('Matrix:', () => {
         ]),
       );
     });
-    test('Multiplying a matrxi by a tuple:', () => {
+    test('Multiplying a matrix by a tuple:', () => {
       const m = new Matrix([
-        1, 2, 3, 4, 2, 4, 4, 2, 9, 6, 4, 1, 0, 0, 0, 1,
+        1, 2, 3, 4, 2, 4, 4, 2, 8, 6, 4, 1, 0, 0, 0, 1,
       ]);
       const t = new Tuple(1, 2, 3, 1);
       expect(m.multiply(t)).toEqual(new Tuple(18, 24, 33, 1));
+    });
+    test('Multiplying a matrix by the identity matrix:', () => {
+      const m = new Matrix([
+        0, 1, 2, 4, 1, 2, 4, 8, 2, 4, 8, 16, 4, 8, 16, 32,
+      ]);
+      const id = Matrix.identityMatrix();
+      expect(m.multiply(id)).toEqual(m);
+    });
+    test('Multiplying a tuple by the identity matrix:', () => {
+      const t = new Tuple(1, 2, 3, Tuple.Type.Point);
+      const id = Matrix.identityMatrix();
+      expect(id.multiply(t)).toEqual(t);
     });
   });
 });

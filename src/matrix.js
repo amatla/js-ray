@@ -103,10 +103,10 @@ class Matrix {
     }
     if (value instanceof Tuple) {
       const result = new Tuple(0, 0, 0, 0);
-      const values = Object.values(value);
+      const keys = Object.keys(value);
       for (let y = 0; y < this.size; y += 1) {
-        for (let x = 0; y < this.size; x += 1) {
-          result[y] += this.data[y][x] * values[y];
+        for (let x = 0; x < this.size; x += 1) {
+          result[keys[y]] += this.data[y][x] * value[keys[x]];
         }
       }
       return result;
@@ -115,6 +115,15 @@ class Matrix {
       'ray001',
       `${value} must be of type Tuple or Matrix`,
     );
+  }
+
+  /**
+   * @returns {matrix}
+   */
+  static identityMatrix() {
+    return new Matrix([
+      1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1,
+    ]);
   }
 }
 
