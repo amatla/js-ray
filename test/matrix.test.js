@@ -1,4 +1,5 @@
 const Matrix = require('../src/matrix');
+const Tuple = require('../src/tuple');
 
 describe('Matrix:', () => {
   describe('Creation:', () => {
@@ -63,6 +64,13 @@ describe('Matrix:', () => {
           46, 42,
         ]),
       );
+    });
+    test('Multiplying a matrxi by a tuple:', () => {
+      const m = new Matrix([
+        1, 2, 3, 4, 2, 4, 4, 2, 9, 6, 4, 1, 0, 0, 0, 1,
+      ]);
+      const t = new Tuple(1, 2, 3, 1);
+      expect(m.multiply(t)).toEqual(new Tuple(18, 24, 33, 1));
     });
   });
 });
