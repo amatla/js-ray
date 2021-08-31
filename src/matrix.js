@@ -31,11 +31,11 @@ class Matrix {
    * @param {number} value
    */
   initMatrix(value) {
-    this.matrix = [];
+    this.data = [];
     for (let y = 0; y < this.size; y += 1) {
-      this.matrix[y] = [];
+      this.data[y] = [];
       for (let x = 0; x < this.size; x += 1) {
-        this.matrix[y][x] = value;
+        this.data[y][x] = value;
       }
     }
   }
@@ -45,11 +45,11 @@ class Matrix {
    * @param {number[]} valuesArray
    */
   initFromArray(valuesArray) {
-    this.matrix = [];
+    this.data = [];
     for (let y = 0; y < this.size; y += 1) {
-      this.matrix[y] = [];
+      this.data[y] = [];
       for (let x = 0; x < this.size; x += 1) {
-        this.matrix[y][x] = valuesArray.shift();
+        this.data[y][x] = valuesArray.shift();
       }
     }
   }
@@ -59,19 +59,38 @@ class Matrix {
    * @returns {string}
    */
   toString() {
-    return this.matrix
-      .map((val) => ` | ${val.join(' | ')} | `)
-      .join('\n');
+    return this.data.map((val) => val.join('\t')).join('\n');
   }
 
+  /**
+   * @param {matrix} mtx
+   * @returns
+   */
   equals(mtx) {
     if (!(mtx instanceof Matrix))
       throw new RayError('ray001', `${mtx} is not a matrix.`);
     if (this.size !== mtx.size) return false;
 
-    return this.matrix.every((row, y) =>
-      row.every((col, x) => col === mtx.matrix[y][x]),
+    return this.data.every((row, y) =>
+      row.every((col, x) => col === mtx.data[y][x]),
     );
+  }
+
+  multiply(mtx) {
+    if (this.size !== mtx.size)
+      throw new RayError(
+        'ray002',
+        'Both matrices must be square and have the same size.',
+      );
+    const result = new Matrix(this.size, 0);
+    for (let y = 0; y < this.size; y += 1) {
+      for (let x = 0; x < this.size; x += 1) {
+        for (let m = 0; m < this.size; m += 1) {
+          result.data[y][x] += this.data[y][m] * mtx.data[m][x];
+        }
+      }
+    }
+    return result;
   }
 }
 
