@@ -117,6 +117,15 @@ class Matrix {
     );
   }
 
+  transpose() {
+    const result = new Matrix(this.size, 0);
+    for (let y = 0; y < this.size; y += 1) {
+      for (let x = 0; x < this.size; x += 1)
+        result.data[y][x] = this.data[x][y];
+    }
+    return result;
+  }
+
   /**
    * @returns {matrix}
    */

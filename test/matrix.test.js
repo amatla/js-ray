@@ -85,4 +85,12 @@ describe('Matrix:', () => {
       expect(id.multiply(t)).toEqual(t);
     });
   });
+  test('Matrix transposition:', () => {
+    const m = new Matrix([
+      0, 9, 3, 0, 9, 8, 0, 8, 1, 8, 5, 3, 0, 0, 5, 8,
+    ]);
+    expect(m.transpose()).toEqual(
+      new Matrix([0, 9, 1, 0, 9, 8, 8, 0, 3, 0, 5, 5, 0, 8, 3, 8]),
+    );
+  });
 });
