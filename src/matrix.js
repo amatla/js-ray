@@ -158,6 +158,26 @@ class Matrix {
     return this.minor(col, row);
   }
 
+  isInvertible() {
+    return this.determinant !== 0;
+  }
+
+  inverse() {
+    if (!this.isInvertible)
+      throw new RayError(
+        'ray002',
+        `The matrix ${this} is not invertable.`,
+      );
+    const inv = new Matrix(this.size, 0);
+    for (let y = 0; y < this.size; y += 1) {
+      for (let x = 0; x < this.size; x += 1) {
+        const c = this.cofactor(x, y);
+        inv.data[y][x] = c / this.determinant;
+      }
+    }
+    return inv;
+  }
+
   /**
    * @returns {matrix}
    */
