@@ -6,7 +6,7 @@ My implementation, in javascript, of the code for the book:
 A Test-Driven Guide to Your First 3D Renderer  
 by [Jamis Buck](https://github.com/jamis)
 
-<details open>
+<details>
     <summary>Chapter 02</summary>
     <img src='./imgs/ch02.jpg' width='600'>
 </details>
