@@ -126,6 +126,25 @@ class Matrix {
     return result;
   }
 
+  get determinant() {
+    if (this.size === 2)
+      return (
+        this.data[0][0] * this.data[1][1] -
+        this.data[0][1] * this.data[1][0]
+      );
+    return false;
+  }
+
+  submatrix(c, r) {
+    const values = [];
+    for (let y = 0; y < this.size; y += 1) {
+      for (let x = 0; x < this.size; x += 1) {
+        if (y !== c && x !== r) values.push(this.data[y][x]);
+      }
+    }
+    return new Matrix(values);
+  }
+
   /**
    * @returns {matrix}
    */

@@ -93,4 +93,27 @@ describe('Matrix:', () => {
       new Matrix([0, 9, 1, 0, 9, 8, 8, 0, 3, 0, 5, 5, 0, 8, 3, 8]),
     );
   });
+  test('Transposing identity matrix:', () => {
+    expect(Matrix.identityMatrix().transpose()).toEqual(
+      Matrix.identityMatrix(),
+    );
+  });
+  describe('Inverting matrices:', () => {
+    test('Determinant of a 2x2 matrix:', () => {
+      const m = new Matrix([1, 5, -3, 2]);
+      expect(m.determinant).toBe(17);
+    });
+    test('Submatrix of a 3x3 matrix:', () => {
+      const m = new Matrix([1, 5, 0, -3, 2, 7, 0, 6, -3]);
+      expect(m.submatrix(0, 2)).toEqual(new Matrix([-3, 2, 0, 6]));
+    });
+    test('Submatrix of a 4x4 matrix:', () => {
+      const m = new Matrix([
+        -6, 1, 1, 6, -8, 5, 8, 6, -1, 0, 8, 2, -7, 1, -1, 1,
+      ]);
+      expect(m.submatrix(2, 1)).toEqual(
+        new Matrix([-6, 1, 6, -8, 8, 6, -7, -1, 1]),
+      );
+    });
+  });
 });
