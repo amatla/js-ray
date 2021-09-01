@@ -115,5 +115,35 @@ describe('Matrix:', () => {
         new Matrix([-6, 1, 6, -8, 8, 6, -7, -1, 1]),
       );
     });
+    test('Minor of a 3x3 matrix:', () => {
+      const m = new Matrix([3, 5, 0, 2, -1, -7, 6, -1, 5]);
+      const sub = m.submatrix(1, 0);
+      expect(sub.determinant).toBe(25);
+      expect(m.minor(1, 0)).toBe(25);
+    });
+    test('Cofactor:', () => {
+      const m = new Matrix([3, 5, 0, 2, -1, -7, 6, -1, 5]);
+      expect(m.minor(0, 0)).toBe(-12);
+      expect(m.cofactor(0, 0)).toBe(-12);
+      expect(m.minor(1, 0)).toBe(25);
+      expect(m.cofactor(1, 0)).toBe(-25);
+    });
+    test('Determinant of a 3x3 matrix:', () => {
+      const m = new Matrix([1, 2, 6, -5, 8, -4, 2, 6, 4]);
+      expect(m.cofactor(0, 0)).toBe(56);
+      expect(m.cofactor(0, 1)).toBe(12);
+      expect(m.cofactor(0, 2)).toBe(-46);
+      expect(m.determinant).toBe(-196);
+    });
+    test('Determinant of a 4x4 matrix:', () => {
+      const m = new Matrix([
+        -2, -8, 3, 5, -3, 1, 7, 3, 1, 2, -9, 6, -6, 7, 7, -9,
+      ]);
+      expect(m.cofactor(0, 0)).toBe(690);
+      expect(m.cofactor(0, 1)).toBe(447);
+      expect(m.cofactor(0, 2)).toBe(210);
+      expect(m.cofactor(0, 3)).toBe(51);
+      expect(m.determinant).toBe(-4071);
+    });
   });
 });

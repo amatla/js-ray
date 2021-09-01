@@ -127,22 +127,35 @@ class Matrix {
   }
 
   get determinant() {
+    let result = 0;
     if (this.size === 2)
-      return (
+      result =
         this.data[0][0] * this.data[1][1] -
-        this.data[0][1] * this.data[1][0]
-      );
-    return false;
+        this.data[0][1] * this.data[1][0];
+    else
+      for (let y = 0; y < this.size; y += 1) {
+        result += this.data[y][0] * this.cofactor(y, 0);
+      }
+    return result;
   }
 
-  submatrix(c, r) {
+  submatrix(col, row) {
     const values = [];
     for (let y = 0; y < this.size; y += 1) {
       for (let x = 0; x < this.size; x += 1) {
-        if (y !== c && x !== r) values.push(this.data[y][x]);
+        if (y !== col && x !== row) values.push(this.data[y][x]);
       }
     }
     return new Matrix(values);
+  }
+
+  minor(col, row) {
+    return this.submatrix(col, row).determinant;
+  }
+
+  cofactor(col, row) {
+    if ((row + col) % 2) return this.minor(col, row) * -1;
+    return this.minor(col, row);
   }
 
   /**
@@ -154,5 +167,7 @@ class Matrix {
     ]);
   }
 }
-
+const m = new Matrix([1, 2, 6, -5, 8, -4, 2, 6, 4]);
+console.log(m.toString());
+console.log(m.determinant);
 module.exports = Matrix;
