@@ -329,5 +329,49 @@ describe('Matrix:', () => {
         ).toBe(true);
       });
     });
+    describe('Shearing:', () => {
+      test('Shearing x in proportion to y:', () => {
+        const s = Matrix.shearing(1, 0, 0, 0, 0, 0);
+        const p = Tuple.getPoint(2, 3, 4);
+        expect(
+          Tuple.compare(s.multiply(p), Tuple.getPoint(5, 3, 4)),
+        ).toBe(true);
+      });
+      test('Shearing x in proportion to z:', () => {
+        const s = Matrix.shearing(0, 1, 0, 0, 0, 0);
+        const p = Tuple.getPoint(2, 3, 4);
+        expect(
+          Tuple.compare(s.multiply(p), Tuple.getPoint(6, 3, 4)),
+        ).toBe(true);
+      });
+      test('Shearing y in proportion to x:', () => {
+        const s = Matrix.shearing(0, 0, 1, 0, 0, 0);
+        const p = Tuple.getPoint(2, 3, 4);
+        expect(
+          Tuple.compare(s.multiply(p), Tuple.getPoint(2, 5, 4)),
+        ).toBe(true);
+      });
+      test('Shearing y in proportion to z:', () => {
+        const s = Matrix.shearing(0, 0, 0, 1, 0, 0);
+        const p = Tuple.getPoint(2, 3, 4);
+        expect(
+          Tuple.compare(s.multiply(p), Tuple.getPoint(2, 7, 4)),
+        ).toBe(true);
+      });
+      test('Shearing z in proportion to x:', () => {
+        const s = Matrix.shearing(0, 0, 0, 0, 1, 0);
+        const p = Tuple.getPoint(2, 3, 4);
+        expect(
+          Tuple.compare(s.multiply(p), Tuple.getPoint(2, 3, 6)),
+        ).toBe(true);
+      });
+      test('Shearing z in proportion to y:', () => {
+        const s = Matrix.shearing(0, 0, 0, 0, 0, 1);
+        const p = Tuple.getPoint(2, 3, 4);
+        expect(
+          Tuple.compare(s.multiply(p), Tuple.getPoint(2, 3, 7)),
+        ).toBe(true);
+      });
+    });
   });
 });

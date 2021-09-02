@@ -232,6 +232,17 @@ class Matrix {
     rz.data[1][1] = Math.cos(radians);
     return rz;
   }
+
+  static shearing(xy, xz, yx, yz, zx, zy) {
+    const s = Matrix.identityMatrix();
+    s.data[0][1] = xy;
+    s.data[0][2] = xz;
+    s.data[1][0] = yx;
+    s.data[1][2] = yz;
+    s.data[2][0] = zx;
+    s.data[2][1] = zy;
+    return s;
+  }
 }
 const m = new Matrix([
   -5, 2, 6, -8, 1, -5, 1, 8, 7, 7, -6, -7, 1, -3, 7, 4,
