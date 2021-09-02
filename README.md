@@ -10,3 +10,7 @@ by [Jamis Buck](https://github.com/jamis)
     <summary>Chapter 02</summary>
     <img src='./imgs/ch02.jpg' width='600'>
 </details>
+<details>
+    <summary>Chapter 04</summary>
+    <img src='./imgs/ch04.jpg' width='600'>
+</details>
