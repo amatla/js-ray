@@ -373,5 +373,34 @@ describe('Matrix:', () => {
         ).toBe(true);
       });
     });
+    describe('Chaining transformations:', () => {
+      test('Individual transformations are applied in sequence:', () => {
+        const p = Tuple.getPoint(1, 0, 1);
+        const rotate = Matrix.rotateX(Math.PI / 2);
+        const scale = Matrix.scaling(5, 5, 5);
+        const move = Matrix.translation(10, 5, 7);
+        // rotation first
+        const p2 = rotate.multiply(p);
+        expect(Tuple.compare(p2, Tuple.getPoint(1, -1, 0))).toBe(
+          true,
+        );
+        const p3 = scale.multiply(p2);
+        expect(Tuple.compare(p3, Tuple.getPoint(5, -5, 0))).toBe(
+          true,
+        );
+        const p4 = move.multiply(p3);
+        expect(Tuple.compare(p4, Tuple.getPoint(15, 0, 7))).toBe(
+          true,
+        );
+      });
+      test('Chained transformations must be applied in reverse order:', () => {
+        let p = Tuple.getPoint(1, 0, 1);
+        const rotate = Matrix.rotateX(Math.PI / 2);
+        const scale = Matrix.scaling(5, 5, 5);
+        const move = Matrix.translation(10, 5, 7);
+        p = move.multiply(scale).multiply(rotate).multiply(p);
+        expect(Tuple.compare(p, Tuple.getPoint(15, 0, 7))).toBe(true);
+      });
+    });
   });
 });
