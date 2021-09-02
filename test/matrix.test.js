@@ -394,12 +394,12 @@ describe('Matrix:', () => {
         );
       });
       test('Chained transformations must be applied in reverse order:', () => {
-        let p = Tuple.getPoint(1, 0, 1);
+        const p = Tuple.getPoint(1, 0, 1);
         const rotate = Matrix.rotateX(Math.PI / 2);
         const scale = Matrix.scaling(5, 5, 5);
         const move = Matrix.translation(10, 5, 7);
-        p = move.multiply(scale).multiply(rotate).multiply(p);
-        expect(Tuple.compare(p, Tuple.getPoint(15, 0, 7))).toBe(true);
+        const t = move.multiply(scale).multiply(rotate).multiply(p);
+        expect(Tuple.compare(t, Tuple.getPoint(15, 0, 7))).toBe(true);
       });
     });
   });
