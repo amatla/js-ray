@@ -1,6 +1,5 @@
-const constants = require('./constants');
-
-const { dPoints } = constants;
+const RayError = require('./errors');
+const utils = require('./utils');
 
 /**
  *
@@ -20,6 +19,21 @@ class Color {
   }
 
   /**
+   * Compares this color to another color and return true if they are the same.
+   * @param {color} col
+   * @returns
+   */
+  equal(col) {
+    if (!(col instanceof Color))
+      throw new RayError('ray001', `${col} is not a color.`);
+    return (
+      utils.equal(this.red, col.red) &&
+      utils.equal(this.green, col.green) &&
+      utils.equal(this.blue, col.blue)
+    );
+  }
+
+  /**
    *
    * @param  {...Color} colors
    * @returns {Color}
@@ -31,11 +45,7 @@ class Color {
       acc.blue += curr.blue;
       return acc;
     });
-    return new Color(
-      Number(sum.red.toFixed(dPoints)),
-      Number(sum.green.toFixed(dPoints)),
-      Number(sum.blue.toFixed(dPoints)),
-    );
+    return new Color(sum.red, sum.green, sum.blue);
   }
 
   /**
@@ -50,11 +60,7 @@ class Color {
       acc.blue -= curr.blue;
       return acc;
     });
-    return new Color(
-      Number(diff.red.toFixed(dPoints)),
-      Number(diff.green.toFixed(dPoints)),
-      Number(diff.blue.toFixed(dPoints)),
-    );
+    return new Color(diff.red, diff.green, diff.blue);
   }
 
   /**
@@ -69,19 +75,7 @@ class Color {
       acc.blue *= curr.blue;
       return acc;
     });
-    return new Color(
-      Number(mult.red.toFixed(dPoints)),
-      Number(mult.green.toFixed(dPoints)),
-      Number(mult.blue.toFixed(dPoints)),
-    );
-  }
-
-  static get BLACK() {
-    return new Color(0, 0, 0);
-  }
-
-  static get WHITE() {
-    return new Color(1, 1, 1);
+    return new Color(mult.red, mult.green, mult.blue);
   }
 
   /**
@@ -91,10 +85,18 @@ class Color {
    */
   multiply(num) {
     return new Color(
-      Number((this.red * num).toFixed(dPoints)),
-      Number((this.green * num).toFixed(dPoints)),
-      Number((this.blue * num).toFixed(dPoints)),
+      this.red * num,
+      this.green * num,
+      this.blue * num,
     );
+  }
+
+  static get BLACK() {
+    return new Color(0, 0, 0);
+  }
+
+  static get WHITE() {
+    return new Color(1, 1, 1);
   }
 }
 
