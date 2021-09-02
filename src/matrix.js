@@ -1,4 +1,5 @@
 const RayError = require('./errors');
+const utils = require('./utils');
 const Tuple = require('./tuple');
 /**
  * Represent a square matrix
@@ -73,7 +74,9 @@ class Matrix {
     if (this.size !== mtx.size) return false;
 
     return this.data.every((row, y) =>
-      row.every((col, x) => col === mtx.data[y][x]),
+      row.every(
+        (col, x) => utils.equal(col, mtx.data[y][x]) === true,
+      ),
     );
   }
 
@@ -186,8 +189,63 @@ class Matrix {
       1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1,
     ]);
   }
+
+  static translation(x = 0, y = 0, z = 0) {
+    const t = Matrix.identityMatrix();
+    t.data[0][3] = x;
+    t.data[1][3] = y;
+    t.data[2][3] = z;
+    return t;
+  }
+
+  static scaling(x = 1, y = 1, z = 1) {
+    const s = Matrix.identityMatrix();
+    s.data[0][0] = x;
+    s.data[1][1] = y;
+    s.data[2][2] = z;
+    return s;
+  }
+
+  static rotateX(radians) {
+    const rx = Matrix.identityMatrix();
+    rx.data[1][1] = Math.cos(radians);
+    rx.data[1][2] = Math.sin(radians) * -1;
+    rx.data[2][1] = Math.sin(radians);
+    rx.data[2][2] = Math.cos(radians);
+    return rx;
+  }
+
+  static rotateY(radians) {
+    const ry = Matrix.identityMatrix();
+    ry.data[0][0] = Math.cos(radians);
+    ry.data[0][2] = Math.sin(radians);
+    ry.data[2][0] = Math.sin(radians) * -1;
+    ry.data[2][2] = Math.cos(radians);
+    return ry;
+  }
+
+  static rotateZ(radians) {
+    const rz = Matrix.identityMatrix();
+    rz.data[0][0] = Math.cos(radians);
+    rz.data[0][1] = Math.sin(radians) * -1;
+    rz.data[1][0] = Math.sin(radians);
+    rz.data[1][1] = Math.cos(radians);
+    return rz;
+  }
 }
-const m = new Matrix([1, 2, 6, -5, 8, -4, 2, 6, 4]);
-console.log(m.toString());
-console.log(m.determinant);
+const m = new Matrix([
+  -5, 2, 6, -8, 1, -5, 1, 8, 7, 7, -6, -7, 1, -3, 7, 4,
+]);
+const n = m.inverse();
+
+console.log(n.toString());
+console.log(
+  n.equals(
+    new Matrix([
+      0.21805, 0.45113, 0.2406, -0.04511, -0.80827, -1.45677,
+      -0.44361, 0.52068, -0.07895, -0.22368, -0.05263, 0.19737,
+      -0.52256, -0.81391, -0.30075, 0.30639,
+    ]),
+  ),
+);
 module.exports = Matrix;

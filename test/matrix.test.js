@@ -1,4 +1,3 @@
-const { dPoints } = require('../src/constants');
 const Matrix = require('../src/matrix');
 const Tuple = require('../src/tuple');
 
@@ -171,16 +170,14 @@ describe('Matrix:', () => {
       expect(m.cofactor(3, 2)).toBe(105);
       expect(n.data[2][3]).toBe(105 / 532);
       expect(
-        n.data.map((col) =>
-          col.map((row) => Number(row.toFixed(dPoints))),
+        n.equals(
+          new Matrix([
+            0.21805, 0.45113, 0.2406, -0.04511, -0.80827, -1.45677,
+            -0.44361, 0.52068, -0.07895, -0.22368, -0.05263, 0.19737,
+            -0.52256, -0.81391, -0.30075, 0.30639,
+          ]),
         ),
-      ).toEqual(
-        new Matrix([
-          0.21805, 0.45113, 0.2406, -0.04511, -0.80827, -1.45677,
-          -0.44361, 0.52068, -0.07895, -0.22368, -0.05263, 0.19737,
-          -0.52256, -0.81391, -0.30075, 0.30639,
-        ]).data,
-      );
+      ).toBe(true);
     });
     test('Calcualting the inverse of another matrix:', () => {
       const m = new Matrix([
@@ -189,16 +186,14 @@ describe('Matrix:', () => {
       expect(
         m
           .inverse()
-          .data.map((col) =>
-            col.map((row) => Number(row.toFixed(dPoints))),
+          .equals(
+            new Matrix([
+              -0.15385, -0.15385, -0.28205, -0.53846, -0.07692,
+              0.12308, 0.02564, 0.03077, 0.35897, 0.35897, 0.4359,
+              0.92308, -0.69231, -0.69231, -0.76923, -1.92308,
+            ]),
           ),
-      ).toEqual(
-        new Matrix([
-          -0.15385, -0.15385, -0.28205, -0.53846, -0.07692, 0.12308,
-          0.02564, 0.03077, 0.35897, 0.35897, 0.4359, 0.92308,
-          -0.69231, -0.69231, -0.76923, -1.92308,
-        ]).data,
-      );
+      ).toBe(true);
     });
     test('Calcualting the inverse of a third matrix:', () => {
       const m = new Matrix([
@@ -207,16 +202,14 @@ describe('Matrix:', () => {
       expect(
         m
           .inverse()
-          .data.map((col) =>
-            col.map((row) => Number(row.toFixed(dPoints))),
+          .equals(
+            new Matrix([
+              -0.04074, -0.07778, 0.14444, -0.22222, -0.07778,
+              0.03333, 0.36667, -0.33333, -0.02901, -0.1463, -0.10926,
+              0.12963, 0.17778, 0.06667, -0.26667, 0.33333,
+            ]),
           ),
-      ).toEqual(
-        new Matrix([
-          -0.04074, -0.07778, 0.14444, -0.22222, -0.07778, 0.03333,
-          0.36667, -0.33333, -0.02901, -0.1463, -0.10926, 0.12963,
-          0.17778, 0.06667, -0.26667, 0.33333,
-        ]).data,
-      );
+      ).toBe(true);
     });
     test('Multiplying a product by its inverse:', () => {
       const m = new Matrix([
@@ -226,13 +219,115 @@ describe('Matrix:', () => {
         8, 2, 2, 2, 3, -1, 7, 0, 7, 0, 5, 4, 6, -2, 0, 5,
       ]);
       const prod = m.multiply(n);
-      const result = new Matrix(m.size, 0);
-      result.data = prod
-        .multiply(n.inverse())
-        .data.map((col) =>
-          col.map((row) => Number(row.toFixed(dPoints))),
-        );
-      expect(result).toEqual(m);
+      const result = prod.multiply(n.inverse());
+      expect(result.equals(m)).toBe(true);
+    });
+  });
+  describe('Matrix transformations:', () => {
+    describe('Translation:', () => {
+      test('Multiplying by a translation matrix:', () => {
+        const t = Matrix.translation(5, -3, 2);
+        const p = Tuple.getPoint(-3, 4, 5);
+        expect(t.multiply(p)).toEqual(Tuple.getPoint(2, 1, 7));
+      });
+      test('Multiplying by the inverse of a translation matrix:', () => {
+        const t = Matrix.translation(5, -3, 2);
+        const inv = t.inverse();
+        const p = Tuple.getPoint(-3, 4, 5);
+        expect(inv.multiply(p)).toEqual(Tuple.getPoint(-8, 7, 3));
+      });
+      test('Translation does not affect vectors:', () => {
+        const t = Matrix.translation(5, -3, 2);
+        const v = Tuple.getVector(-3, 4, 5);
+        expect(t.multiply(v)).toEqual(v);
+      });
+    });
+    describe('Scaling:', () => {
+      test('A scaling matrix applied to a point:', () => {
+        const s = Matrix.scaling(2, 3, 4);
+        const p = Tuple.getPoint(-4, 6, 8);
+        expect(s.multiply(p)).toEqual(Tuple.getPoint(-8, 18, 32));
+      });
+      test('A scaling matrix applied to a vector:', () => {
+        const s = Matrix.scaling(2, 3, 4);
+        const v = Tuple.getVector(-4, 6, 8);
+        expect(s.multiply(v)).toEqual(Tuple.getVector(-8, 18, 32));
+      });
+      test('Multiplying by the inverse of a scaling matrix', () => {
+        const s = Matrix.scaling(2, 3, 4);
+        const inv = s.inverse();
+        const v = Tuple.getVector(-4, 6, 8);
+        expect(inv.multiply(v)).toEqual(Tuple.getVector(-2, 2, 2));
+      });
+      test('Reflection is scaling by a negative value:', () => {
+        const r = Matrix.scaling(-1, 1, 1);
+        const p = Tuple.getPoint(2, 3, 4);
+        expect(r.multiply(p)).toEqual(Tuple.getPoint(-2, 3, 4));
+      });
+    });
+    describe('Rotation:', () => {
+      test('Rotating a point around the x axis', () => {
+        const p = Tuple.getPoint(0, 1, 0);
+        const halfQuarter = Matrix.rotateX(Math.PI / 4);
+        const fullQuarter = Matrix.rotateX(Math.PI / 2);
+        expect(
+          Tuple.compare(
+            halfQuarter.multiply(p),
+            Tuple.getPoint(0, Math.sqrt(2) / 2, Math.sqrt(2) / 2),
+          ),
+        ).toBe(true);
+        expect(
+          Tuple.compare(
+            fullQuarter.multiply(p),
+            Tuple.getPoint(0, 0, 1),
+          ),
+        ).toBe(true);
+      });
+      test('The inverse of an x rotation rotates in the opposite direction:', () => {
+        const p = Tuple.getPoint(0, 1, 0);
+        const halfQuarter = Matrix.rotateX(Math.PI / 4);
+        const inv = halfQuarter.inverse();
+        expect(
+          Tuple.compare(
+            inv.multiply(p),
+            Tuple.getPoint(0, Math.sqrt(2) / 2, -Math.sqrt(2) / 2),
+          ),
+        ).toBe(true);
+      });
+      test('Rotating a point around the y axis:', () => {
+        const p = Tuple.getPoint(0, 0, 1);
+        const halfQuarter = Matrix.rotateY(Math.PI / 4);
+        const fullQuarter = Matrix.rotateY(Math.PI / 2);
+        expect(
+          Tuple.compare(
+            halfQuarter.multiply(p),
+            Tuple.getPoint(Math.sqrt(2) / 2, 0, Math.sqrt(2) / 2),
+          ),
+        ).toBe(true);
+        expect(
+          Tuple.compare(
+            fullQuarter.multiply(p),
+            Tuple.getPoint(1, 0, 0),
+          ),
+        ).toBe(true);
+      });
+      test('Rotating a point around the z axis:', () => {
+        const p = Tuple.getPoint(0, 1, 0);
+        const halfQuarter = Matrix.rotateZ(Math.PI / 4);
+        const fullQuarter = Matrix.rotateZ(Math.PI / 2);
+        expect(
+          Tuple.compare(
+            halfQuarter.multiply(p),
+            Tuple.getPoint(-Math.sqrt(2) / 2, Math.sqrt(2) / 2, 0),
+          ),
+        ).toBe(true);
+        expect(
+          Tuple.compare(
+            fullQuarter.multiply(p),
+            Tuple.getPoint(-1, 0, 0),
+          ),
+        ).toBe(true);
+      });
     });
   });
 });
