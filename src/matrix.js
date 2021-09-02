@@ -129,6 +129,10 @@ class Matrix {
     return result;
   }
 
+  /**
+   *
+   * returns {number}
+   */
   get determinant() {
     let result = 0;
     if (this.size === 2)
@@ -142,6 +146,12 @@ class Matrix {
     return result;
   }
 
+  /**
+   *
+   * @param {number} col
+   * @param {number} row
+   * @returns {matrix}
+   */
   submatrix(col, row) {
     const values = [];
     for (let y = 0; y < this.size; y += 1) {
@@ -152,19 +162,39 @@ class Matrix {
     return new Matrix(values);
   }
 
+  /**
+   *
+   * @param {number} col
+   * @param {number} row
+   * @returns {number}
+   */
   minor(col, row) {
     return this.submatrix(col, row).determinant;
   }
 
+  /**
+   *
+   * @param {number} col
+   * @param {number} row
+   * @returns {number}
+   */
   cofactor(col, row) {
     if ((row + col) % 2) return this.minor(col, row) * -1;
     return this.minor(col, row);
   }
 
+  /**
+   *
+   * @returns {boolean}
+   */
   isInvertible() {
     return this.determinant !== 0;
   }
 
+  /**
+   *
+   * @returns {matrix}
+   */
   inverse() {
     if (!this.isInvertible)
       throw new RayError(
@@ -190,6 +220,13 @@ class Matrix {
     ]);
   }
 
+  /**
+   *
+   * @param {number} x
+   * @param {number} y
+   * @param {number} z
+   * @returns {matrix}
+   */
   static translation(x = 0, y = 0, z = 0) {
     const t = Matrix.identityMatrix();
     t.data[0][3] = x;
@@ -198,6 +235,13 @@ class Matrix {
     return t;
   }
 
+  /**
+   *
+   * @param {number} x
+   * @param {number} y
+   * @param {number} z
+   * @returns {matrix}
+   */
   static scaling(x = 1, y = 1, z = 1) {
     const s = Matrix.identityMatrix();
     s.data[0][0] = x;
@@ -206,6 +250,11 @@ class Matrix {
     return s;
   }
 
+  /**
+   *
+   * @param {radians} radians
+   * @returns {matrix}
+   */
   static rotateX(radians) {
     const rx = Matrix.identityMatrix();
     rx.data[1][1] = Math.cos(radians);
@@ -215,6 +264,11 @@ class Matrix {
     return rx;
   }
 
+  /**
+   *
+   * @param {radians} radians
+   * @returns {matrix}
+   */
   static rotateY(radians) {
     const ry = Matrix.identityMatrix();
     ry.data[0][0] = Math.cos(radians);
@@ -224,6 +278,11 @@ class Matrix {
     return ry;
   }
 
+  /**
+   *
+   * @param {radians} radians
+   * @returns {matrix}
+   */
   static rotateZ(radians) {
     const rz = Matrix.identityMatrix();
     rz.data[0][0] = Math.cos(radians);
@@ -233,6 +292,16 @@ class Matrix {
     return rz;
   }
 
+  /**
+   *
+   * @param {number} xy
+   * @param {number} xz
+   * @param {number} yx
+   * @param {number} yz
+   * @param {number} zx
+   * @param {number} zy
+   * @returns {matrix}
+   */
   static shearing(xy, xz, yx, yz, zx, zy) {
     const s = Matrix.identityMatrix();
     s.data[0][1] = xy;
@@ -244,19 +313,5 @@ class Matrix {
     return s;
   }
 }
-const m = new Matrix([
-  -5, 2, 6, -8, 1, -5, 1, 8, 7, 7, -6, -7, 1, -3, 7, 4,
-]);
-const n = m.inverse();
 
-console.log(n.toString());
-console.log(
-  n.equals(
-    new Matrix([
-      0.21805, 0.45113, 0.2406, -0.04511, -0.80827, -1.45677,
-      -0.44361, 0.52068, -0.07895, -0.22368, -0.05263, 0.19737,
-      -0.52256, -0.81391, -0.30075, 0.30639,
-    ]),
-  ),
-);
 module.exports = Matrix;
