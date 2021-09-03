@@ -86,7 +86,7 @@ class Tuple {
       acc.z += curr.z;
       acc.w += curr.w;
       return acc;
-    });
+    }, Tuple.getVector(0, 0, 0));
     return new Tuple(sum.x, sum.y, sum.z, sum.w);
   }
 
@@ -96,6 +96,14 @@ class Tuple {
    * @returns {Tuple}
    */
   static subtract(...tuples) {
+    const init = new Tuple(
+      tuples[0].x,
+      tuples[0].y,
+      tuples[0].z,
+      tuples[0].w,
+    );
+    tuples.shift();
+
     const diff = tuples.reduce((acc, curr) => {
       if (
         acc.type === Tuple.Type.Vector &&
@@ -110,7 +118,7 @@ class Tuple {
       acc.z -= curr.z;
       acc.w -= curr.w;
       return acc;
-    });
+    }, init);
     return new Tuple(diff.x, diff.y, diff.z, diff.w);
   }
 
