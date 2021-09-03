@@ -54,22 +54,18 @@ describe('Tuple', () => {
     test('adding tuple to tuple:', () => {
       const a = new Tuple(3, -2, 5, Tuple.Type.Point);
       const b = new Tuple(-2, 3, 1, Tuple.Type.Vector);
-      expect(Tuple.add(a, b)).toEqual(
-        new Tuple(1, 1, 6, Tuple.Type.Point),
-      );
+      expect(a.add(b)).toEqual(new Tuple(1, 1, 6, Tuple.Type.Point));
     });
     test('adding vector to vector:', () => {
       const a = new Tuple(3, -2, 5, Tuple.Type.Vector);
       const b = new Tuple(-2, 3, 1, Tuple.Type.Vector);
-      expect(Tuple.add(a, b)).toEqual(
-        new Tuple(1, 1, 6, Tuple.Type.Vector),
-      );
+      expect(a.add(b)).toEqual(new Tuple(1, 1, 6, Tuple.Type.Vector));
     });
     test('adding 3 tuples:', () => {
       const a = new Tuple(3, -2, 5, Tuple.Type.Vector);
       const b = new Tuple(-2, 3, 1, Tuple.Type.Vector);
       const c = new Tuple(1, 1, 2, Tuple.Type.Point);
-      expect(Tuple.add(a, b, c)).toEqual(
+      expect(a.add(b).add(c)).toEqual(
         new Tuple(2, 2, 8, Tuple.Type.Point),
       );
     });
@@ -77,8 +73,8 @@ describe('Tuple', () => {
       const a = new Tuple(3, -2, 5, Tuple.Type.Point);
       const b = new Tuple(-2, 3, 1, Tuple.Type.Vector);
       const c = new Tuple(-2, 3, 1, Tuple.Type.Point);
-      expect(() => Tuple.add(a, b, c)).toThrowError(RayError);
-      expect(() => Tuple.add(a, b, c)).toThrowError(
+      expect(() => a.add(b).add(c)).toThrowError(RayError);
+      expect(() => a.add(b).add(c)).toThrowError(
         "ray002 -- Invalid Operation: Can't add point to point",
       );
     });
@@ -87,37 +83,31 @@ describe('Tuple', () => {
     test('Subctracting two points:', () => {
       const a = Tuple.getPoint(3, 2, 1);
       const b = Tuple.getPoint(5, 6, 7);
-      expect(Tuple.subtract(a, b)).toEqual(
-        Tuple.getVector(-2, -4, -6),
-      );
+      expect(a.subtract(b)).toEqual(Tuple.getVector(-2, -4, -6));
     });
     test('Subtracting a vector from a point', () => {
       const a = Tuple.getPoint(3, 2, 1);
       const b = Tuple.getVector(5, 6, 7);
-      expect(Tuple.subtract(a, b)).toEqual(
-        Tuple.getPoint(-2, -4, -6),
-      );
+      expect(a.subtract(b)).toEqual(Tuple.getPoint(-2, -4, -6));
     });
     test('Subtracting two vectors', () => {
       const a = Tuple.getVector(3, 2, 1);
       const b = Tuple.getVector(5, 6, 7);
-      expect(Tuple.subtract(a, b)).toEqual(
-        Tuple.getVector(-2, -4, -6),
-      );
+      expect(a.subtract(b)).toEqual(Tuple.getVector(-2, -4, -6));
     });
     test('Subtracting three vectors', () => {
       const a = Tuple.getVector(3, 2, 1);
       const b = Tuple.getVector(5, 6, 7);
       const c = Tuple.getVector(2, -2, -1);
-      expect(Tuple.subtract(a, b, c)).toEqual(
+      expect(a.subtract(b).subtract(c)).toEqual(
         Tuple.getVector(-4, -2, -5),
       );
     });
     test('Subtracting a point from a vector', () => {
       const a = Tuple.getVector(3, 2, 1);
       const b = Tuple.getPoint(5, 6, 7);
-      expect(() => Tuple.subtract(a, b)).toThrow(RayError);
-      expect(() => Tuple.subtract(a, b)).toThrow(
+      expect(() => a.subtract(b)).toThrow(RayError);
+      expect(() => a.subtract(b)).toThrow(
         "ray002 -- Invalid Operation: Can't subtract a point from a vector",
       );
     });
@@ -195,13 +185,13 @@ describe('Tuple', () => {
     test('Dot product of two vectors:', () => {
       const a = Tuple.getVector(1, 2, 3);
       const b = Tuple.getVector(2, 3, 4);
-      expect(Tuple.dotProduct(a, b)).toBe(20);
+      expect(a.dotProduct(b)).toBe(20);
     });
     test('Dot product with points:', () => {
       const a = Tuple.getVector(1, 2, 3);
       const b = Tuple.getPoint(2, 3, 4);
-      expect(() => Tuple.dotProduct(a, b)).toThrow(RayError);
-      expect(() => Tuple.dotProduct(a, b)).toThrow(
+      expect(() => a.dotProduct(b)).toThrow(RayError);
+      expect(() => a.dotProduct(b)).toThrow(
         "ray002 -- Invalid Operation: Can't calculate the dot product of two points. Use vectors instead.",
       );
     });
@@ -210,18 +200,14 @@ describe('Tuple', () => {
     test('Cross product of two vectors:', () => {
       const a = Tuple.getVector(1, 2, 3);
       const b = Tuple.getVector(2, 3, 4);
-      expect(Tuple.crossProduct(a, b)).toEqual(
-        Tuple.getVector(-1, 2, -1),
-      );
-      expect(Tuple.crossProduct(b, a)).toEqual(
-        Tuple.getVector(1, -2, 1),
-      );
+      expect(a.crossProduct(b)).toEqual(Tuple.getVector(-1, 2, -1));
+      expect(b.crossProduct(a)).toEqual(Tuple.getVector(1, -2, 1));
     });
     test('Cross product with points:', () => {
       const a = Tuple.getVector(1, 2, 3);
       const b = Tuple.getPoint(2, 3, 4);
-      expect(() => Tuple.crossProduct(a, b)).toThrow(RayError);
-      expect(() => Tuple.crossProduct(a, b)).toThrow(
+      expect(() => a.crossProduct(b)).toThrow(RayError);
+      expect(() => a.crossProduct(b)).toThrow(
         "ray002 -- Invalid Operation: Can't calculate the cross product of two points. Use vectors instead.",
       );
     });

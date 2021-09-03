@@ -21,7 +21,7 @@ class Ray {
   }
 
   position(t = 0) {
-    return Tuple.add(this.origin, this.direction.multiply(t));
+    return this.origin.add(this.direction.multiply(t));
   }
 }
 

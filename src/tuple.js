@@ -7,10 +7,10 @@ const RayError = require('./errors');
 class Tuple {
   /**
    * @constructor
-   * @param {Number} x
-   * @param {Number} x
-   * @param {Number} y
-   * @param {Number} w
+   * @param {number} x
+   * @param {number} x
+   * @param {number} y
+   * @param {number} w
    */
   constructor(x = 0, y = 0, z = 0, w = Tuple.Type.Point) {
     if (w !== Tuple.Type.Point && w !== Tuple.Type.Vector)
@@ -25,7 +25,7 @@ class Tuple {
   }
 
   /**
-   * @returns {Object} - returns Tuple's type as a object
+   * @returns {object} - returns Tuple's type as a object
    */
   static get Type() {
     return { Point: 1.0, Vector: 0.0 };
@@ -33,10 +33,10 @@ class Tuple {
 
   /**
    * returns a new Point
-   * @param {Number} x
-   * @param {Number} y
-   * @param {Number} z
-   * @returns {Tuple}
+   * @param {number} x
+   * @param {number} y
+   * @param {number} z
+   * @returns {tuple}
    */
   static getPoint(x = 0, y = 0, z = 0) {
     return new Tuple(x, y, z, 1.0);
@@ -44,10 +44,10 @@ class Tuple {
 
   /**
    * returns a new Vector
-   * @param {Number} x
-   * @param {Number} y
-   * @param {Number} z
-   * @returns {Tuple}
+   * @param {number} x
+   * @param {number} y
+   * @param {number} z
+   * @returns {tuple}
    */
   static getVector(x = 0, y = 0, z = 0) {
     return new Tuple(x, y, z, 0.0);
@@ -55,111 +55,140 @@ class Tuple {
 
   /**
    * Compares two tuple and return true if they are of the same type and the values of each component are the same
-   * @param {Tuple} a
-   * @param {Tuple} b
+   * @param {tuple|tuple[]} a
+   * @param {tuple} [b]
    * @returns {boolean}
    */
-  static compare(a, b) {
-    return (
-      a instanceof Tuple &&
-      b instanceof Tuple &&
-      utils.equal(a.x, b.x) &&
-      utils.equal(a.y, b.y) &&
-      utils.equal(a.z, b.z) &&
-      a.type === b.type
+  static compare(...tuples) {
+    if (tuples.length === 1)
+      throw new RayError(
+        'ray002',
+        'compare needs at least 2 Tuples as argument',
+      );
+    if (tuples.length === 2)
+      return (
+        tuples[0] instanceof Tuple &&
+        tuples[1] instanceof Tuple &&
+        tuples[0].type === tuples[1].type &&
+        utils.equal(tuples[0].x, tuples[1].x) &&
+        utils.equal(tuples[0].y, tuples[1].y) &&
+        utils.equal(tuples[0].z, tuples[1].z)
+      );
+
+    const first = tuples.shift();
+    return tuples.every(
+      (tpl) =>
+        first instanceof Tuple &&
+        tpl instanceof Tuple &&
+        first.type === tpl.type &&
+        utils.equal(first.x, tpl.x) &&
+        utils.equal(first.y, tpl.y) &&
+        utils.equal(first.z, tpl.z),
     );
   }
 
   /**
    *
-   * @param  {...Tuple} tuples
-   * @returns {Tuple}
+   * @param {tuple} tuple
+   * @returns {tuple}
    */
-  static add(...tuples) {
-    let pCount = 0;
-    const sum = tuples.reduce((acc, curr) => {
-      if (acc.type === Tuple.Type.Point) pCount += 1;
-      if (pCount === 2)
-        throw new RayError('ray002', "Can't add point to point");
-      acc.x += curr.x;
-      acc.y += curr.y;
-      acc.z += curr.z;
-      acc.w += curr.w;
-      return acc;
-    }, Tuple.getVector(0, 0, 0));
-    return new Tuple(sum.x, sum.y, sum.z, sum.w);
+  static copy(tuple) {
+    if (!(tuple instanceof Tuple))
+      throw RayError('ray001', `${tuple} must be a Tuple.`);
+    return new Tuple(tuple.x, tuple.y, tuple.z, tuple.w);
   }
 
   /**
    *
-   * @param  {...Tuple} tuples
-   * @returns {Tuple}
+   * @param {tuple} tpl
+   * @returns {tuple}
    */
-  static subtract(...tuples) {
-    const init = new Tuple(
-      tuples[0].x,
-      tuples[0].y,
-      tuples[0].z,
-      tuples[0].w,
+  add(tpl) {
+    if (!(tpl instanceof Tuple))
+      throw new RayError('ray001', `${tpl} is not a Tuple.`);
+    if (
+      this.type === Tuple.Type.Point &&
+      tpl.type === Tuple.Type.Point
+    )
+      throw new RayError('ray002', "Can't add point to point");
+    return new Tuple(
+      this.x + tpl.x,
+      this.y + tpl.y,
+      this.z + tpl.z,
+      this.w + tpl.w,
     );
-    tuples.shift();
-
-    const diff = tuples.reduce((acc, curr) => {
-      if (
-        acc.type === Tuple.Type.Vector &&
-        curr.type === Tuple.Type.Point
-      )
-        throw new RayError(
-          'ray002',
-          "Can't subtract a point from a vector",
-        );
-      acc.x -= curr.x;
-      acc.y -= curr.y;
-      acc.z -= curr.z;
-      acc.w -= curr.w;
-      return acc;
-    }, init);
-    return new Tuple(diff.x, diff.y, diff.z, diff.w);
   }
 
   /**
    *
-   * @param {Tuple} a
-   * @param {Tuple} b
-   * @returns {Number}
+   * @param  {tuple} tpl
+   * @returns {Tuple}
    */
-  static dotProduct(a, b) {
-    if (a.type === Tuple.Type.Point || b.type === Tuple.Type.Point)
+  subtract(tpl) {
+    if (!(tpl instanceof Tuple))
+      throw new RayError('ray001', `${tpl} is not a Tuple.`);
+    if (
+      this.type === Tuple.Type.Vector &&
+      tpl.type === Tuple.Type.Point
+    )
+      throw new RayError(
+        'ray002',
+        "Can't subtract a point from a vector",
+      );
+    return new Tuple(
+      this.x - tpl.x,
+      this.y - tpl.y,
+      this.z - tpl.z,
+      this.w - tpl.w,
+    );
+  }
+
+  /**
+   *
+   * @param {tuple} a
+   * @param {tuple} b
+   * @returns {number}
+   */
+  dotProduct(tpl) {
+    if (!(tpl instanceof Tuple))
+      throw new RayError('ray001', `${tpl} is not a tuple`);
+    if (
+      this.type === Tuple.Type.Point ||
+      tpl.type === Tuple.Type.Point
+    )
       throw new RayError(
         'ray002',
         "Can't calculate the dot product of two points. Use vectors instead.",
       );
-    return a.x * b.x + a.y * b.y + a.z * b.z;
+    return this.x * tpl.x + this.y * tpl.y + this.z * tpl.z;
   }
 
   /**
    *
-   * @param {Tuple} a
-   * @param {Tuple} b
-   * @returns {Tuple}
+   * @param {tuple} a
+   * @param {tuple} b
+   * @returns {tuple}
    */
-  static crossProduct(a, b) {
-    if (a.type === Tuple.Type.Point || b.type === Tuple.Type.Point)
+  crossProduct(tpl) {
+    if (
+      this.type === Tuple.Type.Point ||
+      tpl.type === Tuple.Type.Point
+    )
       throw new RayError(
         'ray002',
         "Can't calculate the cross product of two points. Use vectors instead.",
       );
     return new Tuple(
-      a.y * b.z - a.z * b.y,
-      a.z * b.x - a.x * b.z,
-      a.x * b.y - a.y * b.x,
+      this.y * tpl.z - this.z * tpl.y,
+      this.z * tpl.x - this.x * tpl.z,
+      this.x * tpl.y - this.y * tpl.x,
       Tuple.Type.Vector,
     );
   }
 
   /**
    * returns the Tuple's type as a number
-   * @returns {Number}
+   * @returns {number}
    */
   get type() {
     return this.w;
@@ -167,14 +196,14 @@ class Tuple {
 
   /**
    * returns the Tuple's type as a string
-   * @returns {String}
+   * @returns {string}
    */
   typeToString() {
     return this.w === 1 ? 'Point' : 'Vector';
   }
 
   /**
-   * @returns {Tuple}
+   * @returns {tuple}
    */
   negate() {
     return new Tuple(-this.x, -this.y, -this.z, this.w);
@@ -182,8 +211,8 @@ class Tuple {
 
   /**
    *
-   * @param {Number} scalar
-   * @returns {Tuple}
+   * @param {number} scalar
+   * @returns {tuple}
    */
   multiply(scalar) {
     return new Tuple(
@@ -196,8 +225,8 @@ class Tuple {
 
   /**
    *
-   * @param {Number} scalar
-   * @returns {Tuple}
+   * @param {number} scalar
+   * @returns {tuple}
    */
   divideBy(scalar) {
     return new Tuple(
@@ -209,7 +238,7 @@ class Tuple {
   }
 
   /**
-   *@returns{Number}
+   *@returns {number}
    */
   get magnitude() {
     if (this.w === Tuple.Type.Point)
@@ -220,7 +249,7 @@ class Tuple {
   }
 
   /**
-   * @returns {Number}
+   * @returns {number}
    */
   normalize() {
     const mag = this.magnitude;
