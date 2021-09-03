@@ -1,5 +1,6 @@
 const Ray = require('../src/ray');
 const Tuple = require('../src/tuple');
+const Sphere = require('../src/shapes/sphere');
 
 describe('Ray:', () => {
   test('Creating and querying a ray:', () => {
@@ -18,5 +19,58 @@ describe('Ray:', () => {
     expect(r.position(1)).toEqual(Tuple.getPoint(3, 3, 4));
     expect(r.position(-1)).toEqual(Tuple.getPoint(1, 3, 4));
     expect(r.position(2.5)).toEqual(Tuple.getPoint(4.5, 3, 4));
+  });
+  test('A ray intersect a sphere at two points:', () => {
+    const r = new Ray(
+      Tuple.getPoint(0, 0, -5),
+      Tuple.getVector(0, 0, 1),
+    );
+    const s = new Sphere();
+    const xs = r.intersect(s);
+    expect(xs.length).toBe(2);
+    expect(xs[0]).toBe(4);
+    expect(xs[1]).toBe(6);
+  });
+  test('A ray instersect a sphere at a tangent:', () => {
+    const r = new Ray(
+      Tuple.getPoint(0, 1, -5),
+      Tuple.getVector(0, 0, 1),
+    );
+    const s = new Sphere();
+    const xs = r.intersect(s);
+    expect(xs.length).toBe(2);
+    expect(xs[0]).toBe(5);
+    expect(xs[1]).toBe(5);
+  });
+  test('A ray misses a sphere:', () => {
+    const r = new Ray(
+      Tuple.getPoint(0, 2, -5),
+      Tuple.getVector(0, 0, 1),
+    );
+    const s = new Sphere();
+    const xs = r.intersect(s);
+    expect(xs.length).toBe(0);
+  });
+  test('A ray originates inside a sphere:', () => {
+    const r = new Ray(
+      Tuple.getPoint(0, 0, 0),
+      Tuple.getVector(0, 0, 1),
+    );
+    const s = new Sphere();
+    const xs = r.intersect(s);
+    expect(xs.length).toBe(2);
+    expect(xs[0]).toBe(-1);
+    expect(xs[1]).toBe(1);
+  });
+  test('A ray originates behind a sphere:', () => {
+    const r = new Ray(
+      Tuple.getPoint(0, 0, 5),
+      Tuple.getVector(0, 0, 1),
+    );
+    const s = new Sphere();
+    const xs = r.intersect(s);
+    expect(xs.length).toBe(2);
+    expect(xs[0]).toBe(-6);
+    expect(xs[1]).toBe(-4);
   });
 });
