@@ -27,7 +27,7 @@ const Color = require('../src/color');
     pixel = rot.multiply(pixel);
     // add the rotated vector (multiplied by the arm length) to the center point
     // to move it in the right direction of armLength amount.
-    pixel = Tuple.add(pixel.multiply(armLength), center);
+    pixel = pixel.multiply(armLength).add(center);
     cvs.writePixel(Math.round(pixel.x), Math.round(pixel.z), col);
   }
   cvs.writePPM('./imgs/ch04.ppm');
