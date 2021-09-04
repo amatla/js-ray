@@ -25,6 +25,17 @@ class Sphere {
       throw new RayError('ray001', `${mtx} is not of type Matrix.`);
     this.transform = this.transform.multiply(mtx);
   }
+
+  /**
+   *
+   * @param {tuple} p
+   * @returns {tuple}
+   */
+  normalAt(p) {
+    if (!(p instanceof Tuple || !(p.type === Tuple.Type.Point)))
+      throw new RayError('ray001', `${p} is not a point.`);
+    return p.subtract(this.origin).normalize();
+  }
 }
 
 module.exports = Sphere;
