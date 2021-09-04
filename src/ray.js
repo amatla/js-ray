@@ -1,6 +1,5 @@
 const RayError = require('./errors');
 const Tuple = require('./tuple');
-const Sphere = require('./shapes/sphere');
 const Intersection = require('./intersection');
 
 class Ray {
