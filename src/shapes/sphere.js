@@ -4,6 +4,11 @@ const Matrix = require('../matrix');
 const Tuple = require('../tuple');
 
 class Sphere {
+  /**
+   *
+   * @param {tuple} origin
+   * @param {number} radius
+   */
   constructor(origin = Tuple.getPoint(0, 0, 0), radius = 1) {
     this.uuid = uuidv4();
     this.origin = origin;
@@ -11,6 +16,10 @@ class Sphere {
     this.transform = Matrix.identityMatrix();
   }
 
+  /**
+   *
+   * @param {matrix} mtx
+   */
   setTransform(mtx) {
     if (!(mtx instanceof Matrix))
       throw new RayError('ray001', `${mtx} is not of type Matrix.`);
