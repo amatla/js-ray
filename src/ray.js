@@ -1,6 +1,7 @@
 const RayError = require('./errors');
 const Tuple = require('./tuple');
 const Sphere = require('./shapes/sphere');
+const Intersection = require('./intersection');
 
 class Ray {
   constructor(
@@ -27,8 +28,6 @@ class Ray {
 
   intersect(s) {
     const sToRay = this.origin.subtract(s.origin);
-    console.log(s);
-    console.log(sToRay);
     const a = this.direction.dotProduct(this.direction);
     const b = 2 * this.direction.dotProduct(sToRay);
     const c = sToRay.dotProduct(sToRay) - 1;
@@ -36,7 +35,7 @@ class Ray {
     if (disc < 0) return [];
     const t1 = (-b - Math.sqrt(disc)) / (2 * a);
     const t2 = (-b + Math.sqrt(disc)) / (2 * a);
-    return [t1, t2];
+    return [new Intersection(t1, s), new Intersection(t2, s)];
   }
 }
 

@@ -28,8 +28,8 @@ describe('Ray:', () => {
     const s = new Sphere();
     const xs = r.intersect(s);
     expect(xs.length).toBe(2);
-    expect(xs[0]).toBe(4);
-    expect(xs[1]).toBe(6);
+    expect(xs[0].t).toBe(4);
+    expect(xs[1].t).toBe(6);
   });
   test('A ray instersect a sphere at a tangent:', () => {
     const r = new Ray(
@@ -39,8 +39,8 @@ describe('Ray:', () => {
     const s = new Sphere();
     const xs = r.intersect(s);
     expect(xs.length).toBe(2);
-    expect(xs[0]).toBe(5);
-    expect(xs[1]).toBe(5);
+    expect(xs[0].t).toBe(5);
+    expect(xs[1].t).toBe(5);
   });
   test('A ray misses a sphere:', () => {
     const r = new Ray(
@@ -59,8 +59,8 @@ describe('Ray:', () => {
     const s = new Sphere();
     const xs = r.intersect(s);
     expect(xs.length).toBe(2);
-    expect(xs[0]).toBe(-1);
-    expect(xs[1]).toBe(1);
+    expect(xs[0].t).toBe(-1);
+    expect(xs[1].t).toBe(1);
   });
   test('A ray originates behind a sphere:', () => {
     const r = new Ray(
@@ -70,7 +70,18 @@ describe('Ray:', () => {
     const s = new Sphere();
     const xs = r.intersect(s);
     expect(xs.length).toBe(2);
-    expect(xs[0]).toBe(-6);
-    expect(xs[1]).toBe(-4);
+    expect(xs[0].t).toBe(-6);
+    expect(xs[1].t).toBe(-4);
+  });
+  test('Intersect sets the object on the intersection:', () => {
+    const r = new Ray(
+      Tuple.getPoint(0, 0, -5),
+      Tuple.getVector(0, 0, 1),
+    );
+    const s = new Sphere();
+    const xs = r.intersect(s);
+    expect(xs.length).toBe(2);
+    expect(xs[0].object).toEqual(s);
+    expect(xs[1].object).toEqual(s);
   });
 });
