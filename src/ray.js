@@ -1,6 +1,7 @@
 const RayError = require('./errors');
 const Tuple = require('./tuple');
 const Intersection = require('./intersection');
+const Matrix = require('./matrix');
 
 class Ray {
   constructor(
@@ -35,6 +36,15 @@ class Ray {
     const t1 = (-b - Math.sqrt(disc)) / (2 * a);
     const t2 = (-b + Math.sqrt(disc)) / (2 * a);
     return [new Intersection(t1, s), new Intersection(t2, s)];
+  }
+
+  transform(mtx) {
+    if (!(mtx instanceof Matrix))
+      throw new RayError('ray001', `${mtx} is not of type Matrix.`);
+    return new Ray(
+      mtx.multiply(this.origin),
+      mtx.multiply(this.direction),
+    );
   }
 }
 
