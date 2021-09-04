@@ -108,5 +108,15 @@ describe('Ray:', () => {
       expect(r2.origin).toEqual(Tuple.getPoint(2, 6, 12));
       expect(r2.direction).toEqual(Tuple.getVector(0, 3, 0));
     });
+    test('A sphere default transformation:', () => {
+      const s = new Sphere();
+      expect(s.transform).toEqual(Matrix.identityMatrix());
+    });
+    test('Changing a sphere transformation:', () => {
+      const s = new Sphere();
+      const t = Matrix.translation(2, 3, 4);
+      s.setTransform(t);
+      expect(s.transform).toEqual(t);
+    });
   });
 });
