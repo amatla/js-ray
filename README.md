@@ -14,3 +14,7 @@ by [Jamis Buck](https://github.com/jamis)
     <summary>Chapter 04</summary>
     <img src='./imgs/ch04.jpg' width='600'>
 </details>
+<details>
+    <summary>Chapter 05</summary>
+    <img src='./imgs/ch05.jpg' width='600'>
+</details>
