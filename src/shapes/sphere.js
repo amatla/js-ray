@@ -14,7 +14,7 @@ class Sphere {
   setTransform(mtx) {
     if (!(mtx instanceof Matrix))
       throw new RayError('ray001', `${mtx} is not of type Matrix.`);
-    this.transform = mtx.multiply(this.transform);
+    this.transform = this.transform.multiply(mtx);
   }
 }
 

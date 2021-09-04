@@ -118,5 +118,27 @@ describe('Ray:', () => {
       s.setTransform(t);
       expect(s.transform).toEqual(t);
     });
+    test('Intersecting a scaled sphere with a ray:', () => {
+      const r = new Ray(
+        Tuple.getPoint(0, 0, -5),
+        Tuple.getVector(0, 0, 1),
+      );
+      const s = new Sphere();
+      s.setTransform(Matrix.scaling(2, 2, 2));
+      const xs = r.intersect(s);
+      expect(xs.length).toBe(2);
+      expect(xs[0].t).toBe(3);
+      expect(xs[1].t).toBe(7);
+    });
+    test('Intersecting a translated sphere with a ray:', () => {
+      const r = new Ray(
+        Tuple.getPoint(0, 0, -5),
+        Tuple.getVector(0, 0, 1),
+      );
+      const s = new Sphere();
+      s.setTransform(Matrix.translation(5, 0, 0));
+      const xs = r.intersect(s);
+      expect(xs.length).toBe(0);
+    });
   });
 });

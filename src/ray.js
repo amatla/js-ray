@@ -27,9 +27,10 @@ class Ray {
   }
 
   intersect(s) {
-    const sToRay = this.origin.subtract(s.origin);
-    const a = this.direction.dotProduct(this.direction);
-    const b = 2 * this.direction.dotProduct(sToRay);
+    const rt = this.transform(s.transform.inverse());
+    const sToRay = rt.origin.subtract(s.origin);
+    const a = rt.direction.dotProduct(rt.direction);
+    const b = 2 * rt.direction.dotProduct(sToRay);
     const c = sToRay.dotProduct(sToRay) - 1;
     const disc = b ** 2 - 4 * a * c;
     if (disc < 0) return [];
