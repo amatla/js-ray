@@ -2,11 +2,21 @@ const RayError = require('./errors');
 const Sphere = require('./shapes/sphere');
 
 class Intersection {
+  /**
+   *
+   * @param {number} t
+   * @param {shape} obj
+   */
   constructor(t = 0, obj = new Sphere()) {
     this.t = t;
     this.object = obj;
   }
 
+  /**
+   *
+   * @param {intersection[]} intersections
+   * @returns {instrsection|null}
+   */
   static hit(intersections) {
     if (!(intersections instanceof Array))
       throw new RayError(

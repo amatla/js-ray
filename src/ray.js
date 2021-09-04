@@ -4,6 +4,11 @@ const Intersection = require('./intersection');
 const Matrix = require('./matrix');
 
 class Ray {
+  /**
+   *
+   * @param {tuple} origin
+   * @param {tuple} direction
+   */
   constructor(
     origin = Tuple.getPoint(0, 0, 0),
     direction = Tuple.getVector(1, 1, 0),
@@ -22,10 +27,20 @@ class Ray {
     this.direction = direction;
   }
 
-  position(t = 0) {
+  /**
+   *
+   * @param {number} t
+   * @returns {tuple}
+   */
+  position(t) {
     return this.origin.add(this.direction.multiply(t));
   }
 
+  /**
+   *
+   * @param {shape} s
+   * @returns {Intersection[]|[]}
+   */
   intersect(s) {
     const rt = this.transform(s.transform.inverse());
     const sToRay = rt.origin.subtract(s.origin);
@@ -39,6 +54,11 @@ class Ray {
     return [new Intersection(t1, s), new Intersection(t2, s)];
   }
 
+  /**
+   *
+   * @param {matrix} mtx
+   * @returns
+   */
   transform(mtx) {
     if (!(mtx instanceof Matrix))
       throw new RayError('ray001', `${mtx} is not of type Matrix.`);
