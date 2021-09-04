@@ -253,6 +253,7 @@ class Tuple {
    */
   normalize() {
     const mag = this.magnitude;
+    if (mag === 0) return new Tuple(0, 0, 0, this.w);
     return new Tuple(
       this.x / mag,
       this.y / mag,
