@@ -212,4 +212,11 @@ describe('Tuple', () => {
       );
     });
   });
+  describe('Reflecting:', () => {
+    test('Reflecting a vector approaching at 45 degrees:', () => {
+      const v = Tuple.getVector(1, -1, 0);
+      const n = Tuple.getVector(0, 1, 0);
+      expect(v.reflect(n)).toEqual(Tuple.getVector(1, 1, 0));
+    });
+  });
 });

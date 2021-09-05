@@ -261,6 +261,18 @@ class Tuple {
       this.w,
     );
   }
+
+  /**
+   *
+   * @param {tuple} axe
+   * @returns {tuple}
+   */
+  reflect(axe) {
+    if (!(axe instanceof Tuple) || !(axe.type === Tuple.Type.Vector))
+      throw new RayError('ray001', `${axe} is not a vector.`);
+    const dot = this.dotProduct(axe);
+    return this.subtract(axe.multiply(2 * dot));
+  }
 }
 
 module.exports = Tuple;
