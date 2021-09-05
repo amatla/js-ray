@@ -2,6 +2,7 @@ const Sphere = require('../src/shapes/sphere');
 const Ray = require('../src/ray');
 const Matrix = require('../src/matrix');
 const Tuple = require('../src/tuple');
+const utils = require('../src/utils');
 
 describe('Sphere:', () => {
   describe('Transformations:', () => {
@@ -85,6 +86,27 @@ describe('Sphere:', () => {
         ),
       );
       expect(n).toEqual(n.normalize());
+    });
+    test('Computing the normal on a translated sphere:', () => {
+      const s = new Sphere();
+      s.setTransform(Matrix.translation(0, 1, 0));
+      const n = s.normalAt(Tuple.getPoint(0, 1.70711, -0.70711));
+      expect(utils.equal(n.x, 0)).toBe(true);
+      expect(utils.equal(n.y, 0.70711)).toBe(true);
+      expect(utils.equal(n.z, -0.70711)).toBe(true);
+    });
+    test('Computing the normal on a transformed sphere:', () => {
+      const s = new Sphere();
+      const m = Matrix.scaling(1, 0.5, 1).multiply(
+        Matrix.rotateZ(Math.PI / 5),
+      );
+      s.setTransform(m);
+      const n = s.normalAt(
+        Tuple.getPoint(0, Math.sqrt(2) / 2, -(Math.sqrt(2) / 2)),
+      );
+      expect(utils.equal(n.x, 0)).toBe(true);
+      expect(utils.equal(n.y, 0.97014)).toBe(true);
+      expect(utils.equal(n.z, -0.24254)).toBe(true);
     });
   });
 });

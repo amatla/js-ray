@@ -34,7 +34,18 @@ class Sphere {
   normalAt(p) {
     if (!(p instanceof Tuple || !(p.type === Tuple.Type.Point)))
       throw new RayError('ray001', `${p} is not a point.`);
-    return p.subtract(this.origin).normalize();
+    console.log(p);
+    // transform point to obj coordinates
+    const objP = this.transform.inverse().multiply(p);
+    // calculate the normal in object space
+    const objN = objP.subtract(this.origin);
+    // calculate the normal in world space
+    const worldN = this.transform
+      .inverse()
+      .transpose()
+      .multiply(objN);
+    worldN.w = 0;
+    return worldN.normalize();
   }
 }
 
