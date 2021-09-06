@@ -1,5 +1,6 @@
 const { v4: uuidv4 } = require('uuid');
 const RayError = require('../errors');
+const Material = require('../material');
 const Matrix = require('../matrix');
 const Tuple = require('../tuple');
 
@@ -9,10 +10,15 @@ class Sphere {
    * @param {tuple} origin
    * @param {number} radius
    */
-  constructor(origin = Tuple.getPoint(0, 0, 0), radius = 1) {
+  constructor(
+    origin = Tuple.getPoint(0, 0, 0),
+    radius = 1,
+    material = new Material(),
+  ) {
     this.uuid = uuidv4();
     this.origin = origin;
     this.radius = radius;
+    this.material = material;
     this.transform = Matrix.identityMatrix();
   }
 

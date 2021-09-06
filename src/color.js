@@ -35,59 +35,51 @@ class Color {
 
   /**
    *
-   * @param  {...Color} colors
-   * @returns {Color}
+   * @param  {col} color
+   * @returns {color}
    */
-  static add(...colors) {
-    const sum = colors.reduce((acc, curr) => {
-      acc.red += curr.red;
-      acc.green += curr.green;
-      acc.blue += curr.blue;
-      return acc;
-    });
-    return new Color(sum.red, sum.green, sum.blue);
-  }
-
-  /**
-   *
-   * @param  {...Color} colors
-   * @returns {Color}
-   */
-  static subtract(...colors) {
-    const diff = colors.reduce((acc, curr) => {
-      acc.red -= curr.red;
-      acc.green -= curr.green;
-      acc.blue -= curr.blue;
-      return acc;
-    });
-    return new Color(diff.red, diff.green, diff.blue);
-  }
-
-  /**
-   *
-   * @param  {...Color} colors
-   * @returns {Color}
-   */
-  static multiply(...colors) {
-    const mult = colors.reduce((acc, curr) => {
-      acc.red *= curr.red;
-      acc.green *= curr.green;
-      acc.blue *= curr.blue;
-      return acc;
-    });
-    return new Color(mult.red, mult.green, mult.blue);
-  }
-
-  /**
-   *
-   * @param {Number} num
-   * @returns {Color}
-   */
-  multiply(num) {
+  add(col) {
+    if (!(col instanceof Color))
+      throw new RayError('ray001', `${col} is not a color`);
     return new Color(
-      this.red * num,
-      this.green * num,
-      this.blue * num,
+      this.red + col.red,
+      this.green + col.green,
+      this.blue + col.blue,
+    );
+  }
+
+  /**
+   *
+   * @param  {color} col
+   * @returns {color}
+   */
+  subtract(col) {
+    if (!(col instanceof Color))
+      throw new RayError('ray001', `${col} is not a color`);
+    return new Color(
+      this.red - col.red,
+      this.green - col.green,
+      this.blue - col.blue,
+    );
+  }
+
+  /**
+   *
+   * @param  {color|number} col
+   * @returns {color}
+   */
+  multiply(col) {
+    if (col instanceof Color)
+      return new Color(
+        this.red * col.red,
+        this.green * col.green,
+        this.blue * col.blue,
+      );
+
+    return new Color(
+      this.red * col,
+      this.green * col,
+      this.blue * col,
     );
   }
 

@@ -3,6 +3,7 @@ const Ray = require('../src/ray');
 const Matrix = require('../src/matrix');
 const Tuple = require('../src/tuple');
 const utils = require('../src/utils');
+const Material = require('../src/material');
 
 describe('Sphere:', () => {
   describe('Transformations:', () => {
@@ -107,6 +108,19 @@ describe('Sphere:', () => {
       expect(utils.equal(n.x, 0)).toBe(true);
       expect(utils.equal(n.y, 0.97014)).toBe(true);
       expect(utils.equal(n.z, -0.24254)).toBe(true);
+    });
+  });
+  describe('Material:', () => {
+    test('A sphere has a default material:', () => {
+      const s = new Sphere();
+      expect(s.material).toEqual(new Material());
+    });
+    test('A sphere can be assigned a material:', () => {
+      const s = new Sphere();
+      const m = new Material();
+      m.ambient = 1;
+      s.material = m;
+      expect(s.material).toEqual(m);
     });
   });
 });
