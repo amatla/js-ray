@@ -1,3 +1,4 @@
+const utils = require('../src/utils');
 const Color = require('../src/color');
 
 describe('Color:', () => {
