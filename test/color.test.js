@@ -1,4 +1,3 @@
-const utils = require('../src/utils');
 const Color = require('../src/color');
 
 describe('Color:', () => {
@@ -17,7 +16,6 @@ describe('Color:', () => {
   test('Subtracting colors:', () => {
     const c1 = new Color(0.9, 0.6, 0.75);
     const c2 = new Color(0.7, 0.1, 0.25);
-    const diff = c1.subtract(c2);
     expect(c1.subtract(c2).equal(new Color(0.2, 0.5, 0.5))).toBe(
       true,
     );
