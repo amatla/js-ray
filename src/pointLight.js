@@ -7,8 +7,8 @@ const Tuple = require('./tuple');
 class PointLight {
   /**
    *
-   * @param {tuple} position
-   * @param {color} intensity
+   * @param {Tuple} position
+   * @param {Color} intensity
    */
   constructor(
     position = Tuple.getVector(0, 0, 0),

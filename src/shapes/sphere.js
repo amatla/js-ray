@@ -40,7 +40,6 @@ class Sphere {
   normalAt(p) {
     if (!(p instanceof Tuple || !(p.type === Tuple.Type.Point)))
       throw new RayError('ray001', `${p} is not a point.`);
-    console.log(p);
     // transform point to obj coordinates
     const objP = this.transform.inverse().multiply(p);
     // calculate the normal in object space
