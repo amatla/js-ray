@@ -47,7 +47,9 @@ describe('Material:', () => {
         new Color(1, 1, 1),
       );
       const result = m.lighting(light, position, eye, normal);
-      expect(result).toEqual(new Color(0.7634, 0.7634, 0.7634));
+      expect(result.equal(new Color(0.7364, 0.7364, 0.7364))).toBe(
+        true,
+      );
     });
     test('Lighting with eye in the path of the reflection vector:', () => {
       const eye = Tuple.getVector(
@@ -61,7 +63,9 @@ describe('Material:', () => {
         new Color(1, 1, 1),
       );
       const result = m.lighting(light, position, eye, normal);
-      expect(result).toEqual(new Color(1.6364, 1.6364, 1.6364));
+      expect(result.equal(new Color(1.6364, 1.6364, 1.6364))).toBe(
+        true,
+      );
     });
     test('Lighting with light behind the surface:', () => {
       const eye = Tuple.getVector(0, 0, -1);
