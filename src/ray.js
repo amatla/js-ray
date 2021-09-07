@@ -6,8 +6,8 @@ const Matrix = require('./matrix');
 class Ray {
   /**
    *
-   * @param {tuple} origin
-   * @param {tuple} direction
+   * @param {Tuple} origin
+   * @param {Tuple} direction
    */
   constructor(
     origin = Tuple.getPoint(0, 0, 0),
@@ -29,8 +29,8 @@ class Ray {
 
   /**
    *
-   * @param {number} t
-   * @returns {tuple}
+   * @param {Number} t
+   * @returns {Tuple}
    */
   position(t) {
     return this.origin.add(this.direction.multiply(t));
@@ -38,7 +38,7 @@ class Ray {
 
   /**
    *
-   * @param {shape} s
+   * @param {Shape} s
    * @returns {Intersection[]|[]}
    */
   intersect(s) {
@@ -56,7 +56,7 @@ class Ray {
 
   /**
    *
-   * @param {matrix} mtx
+   * @param {Matrix} mtx
    * @returns
    */
   transform(mtx) {
