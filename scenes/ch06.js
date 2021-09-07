@@ -4,7 +4,6 @@ const Color = require('../src/color');
 const Ray = require('../src/ray');
 const Sphere = require('../src/shapes/sphere');
 const Material = require('../src/material');
-const Light = require('../src/pointLight');
 const Intersection = require('../src/intersection');
 const PointLight = require('../src/pointLight');
 // const Matrix = require('../src/matrix');
