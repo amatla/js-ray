@@ -7,10 +7,10 @@ const RayError = require('./errors');
 class Tuple {
   /**
    * @constructor
-   * @param {number} x
-   * @param {number} x
-   * @param {number} y
-   * @param {number} w
+   * @param {Number} x
+   * @param {Number} x
+   * @param {Number} y
+   * @param {Number} w
    */
   constructor(x = 0, y = 0, z = 0, w = Tuple.Type.Point) {
     if (w !== Tuple.Type.Point && w !== Tuple.Type.Vector)
@@ -25,7 +25,7 @@ class Tuple {
   }
 
   /**
-   * @returns {object} - returns Tuple's type as a object
+   * @returns {Object} - returns Tuple's type as a object
    */
   static get Type() {
     return { Point: 1.0, Vector: 0.0 };
@@ -33,10 +33,10 @@ class Tuple {
 
   /**
    * returns a new Point
-   * @param {number} x
-   * @param {number} y
-   * @param {number} z
-   * @returns {tuple}
+   * @param {Number} x
+   * @param {Number} y
+   * @param {Number} z
+   * @returns {Tuple}
    */
   static getPoint(x = 0, y = 0, z = 0) {
     return new Tuple(x, y, z, 1.0);
@@ -44,10 +44,10 @@ class Tuple {
 
   /**
    * returns a new Vector
-   * @param {number} x
-   * @param {number} y
-   * @param {number} z
-   * @returns {tuple}
+   * @param {Number} x
+   * @param {Number} y
+   * @param {Number} z
+   * @returns {Tuple}
    */
   static getVector(x = 0, y = 0, z = 0) {
     return new Tuple(x, y, z, 0.0);
@@ -55,9 +55,9 @@ class Tuple {
 
   /**
    * Compares two tuple and return true if they are of the same type and the values of each component are the same
-   * @param {tuple|tuple[]} a
-   * @param {tuple} [b]
-   * @returns {boolean}
+   * @param {Tuple|Tuple[]} a
+   * @param {Tuple} [b]
+   * @returns {Boolean}
    */
   static compare(...tuples) {
     if (tuples.length === 1)
@@ -89,8 +89,8 @@ class Tuple {
 
   /**
    *
-   * @param {tuple} tuple
-   * @returns {tuple}
+   * @param {Tuple} Tuple
+   * @returns {Tuple}
    */
   static copy(tuple) {
     if (!(tuple instanceof Tuple))
@@ -100,8 +100,8 @@ class Tuple {
 
   /**
    *
-   * @param {tuple} tpl
-   * @returns {tuple}
+   * @param {Tuple} tpl
+   * @returns {Tuple}
    */
   add(tpl) {
     if (!(tpl instanceof Tuple))
@@ -121,7 +121,7 @@ class Tuple {
 
   /**
    *
-   * @param  {tuple} tpl
+   * @param  {Tuple} tpl
    * @returns {Tuple}
    */
   subtract(tpl) {
@@ -145,9 +145,9 @@ class Tuple {
 
   /**
    *
-   * @param {tuple} a
-   * @param {tuple} b
-   * @returns {number}
+   * @param {Tuple} a
+   * @param {Tuple} b
+   * @returns {Number}
    */
   dotProduct(tpl) {
     if (!(tpl instanceof Tuple))
@@ -165,9 +165,9 @@ class Tuple {
 
   /**
    *
-   * @param {tuple} a
-   * @param {tuple} b
-   * @returns {tuple}
+   * @param {Tuple} a
+   * @param {Tuple} b
+   * @returns {Tuple}
    */
   crossProduct(tpl) {
     if (
@@ -188,7 +188,7 @@ class Tuple {
 
   /**
    * returns the Tuple's type as a number
-   * @returns {number}
+   * @returns {Number}
    */
   get type() {
     return this.w;
@@ -196,14 +196,14 @@ class Tuple {
 
   /**
    * returns the Tuple's type as a string
-   * @returns {string}
+   * @returns {String}
    */
   typeToString() {
     return this.w === 1 ? 'Point' : 'Vector';
   }
 
   /**
-   * @returns {tuple}
+   * @returns {Tuple}
    */
   negate() {
     return new Tuple(-this.x, -this.y, -this.z, this.w);
@@ -211,8 +211,8 @@ class Tuple {
 
   /**
    *
-   * @param {number} scalar
-   * @returns {tuple}
+   * @param {Number} scalar
+   * @returns {Tuple}
    */
   multiply(scalar) {
     return new Tuple(
@@ -225,8 +225,8 @@ class Tuple {
 
   /**
    *
-   * @param {number} scalar
-   * @returns {tuple}
+   * @param {Number} scalar
+   * @returns {Tuple}
    */
   divideBy(scalar) {
     return new Tuple(
@@ -238,7 +238,7 @@ class Tuple {
   }
 
   /**
-   *@returns {number}
+   *@returns {Number}
    */
   get magnitude() {
     if (this.w === Tuple.Type.Point)
@@ -249,7 +249,7 @@ class Tuple {
   }
 
   /**
-   * @returns {number}
+   * @returns {Number}
    */
   normalize() {
     const mag = this.magnitude;
@@ -264,8 +264,8 @@ class Tuple {
 
   /**
    *
-   * @param {tuple} axe
-   * @returns {tuple}
+   * @param {Tuple} axe
+   * @returns {Tuple}
    */
   reflect(axe) {
     if (!(axe instanceof Tuple) || !(axe.type === Tuple.Type.Vector))

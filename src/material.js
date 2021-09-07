@@ -7,11 +7,11 @@ const PointLight = require('./pointLight');
 class Material {
   /**
    *
-   * @param {color} color
-   * @param {number} ambient
-   * @param {number} diffuse
-   * @param {number} specular
-   * @param {number} shininess
+   * @param {Color} color
+   * @param {Number} ambient
+   * @param {Number} diffuse
+   * @param {Number} specular
+   * @param {Number} shininess
    */
   constructor(
     color = new Color(1, 1, 1),
@@ -29,11 +29,11 @@ class Material {
 
   /**
    *
-   * @param {pointLight} light
-   * @param {tuple} point
-   * @param {tuple} eye
-   * @param {tuple} normal
-   * @returns
+   * @param {PointLight} light
+   * @param {Tuple} point
+   * @param {Tuple} eye
+   * @param {Tuple} normal
+   * @returns {Color}
    */
   lighting(light, point, eye, normal) {
     // combine surface color with the light's color/intensity

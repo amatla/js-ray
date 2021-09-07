@@ -8,9 +8,9 @@ const Tuple = require('./tuple');
 class Matrix {
   /**
    *
-   * @param {number|number[]} [rows=4] number of rows/column for the matrix or an array of values to fill the matrix with.
+   * @param {Number|Number[]} [rows=4] number of rows/column for the matrix or an array of values to fill the matrix with.
    * array.length must be a perfect square.
-   * @param {number} [data=0] if the first argument is a {number} data is the value each element of the square matrix will be filled with.
+   * @param {Number} [data=0] if the first argument is a {number} data is the value each element of the square matrix will be filled with.
    */
   constructor(rows = 4, data = 0) {
     if (Array.isArray(rows)) {
@@ -30,7 +30,7 @@ class Matrix {
 
   /**
    * Initialize the matrix with each element = value.
-   * @param {number} value
+   * @param {Number} value
    */
   initMatrix(value) {
     this.data = [];
@@ -44,7 +44,7 @@ class Matrix {
 
   /**
    * Initialize the matrix with an array of values.
-   * @param {number[]} valuesArray
+   * @param {Number[]} valuesArray
    */
   initFromArray(valuesArray) {
     this.data = [];
@@ -58,14 +58,14 @@ class Matrix {
 
   /**
    * Convert the matrix to string.
-   * @returns {string}
+   * @returns {String}
    */
   toString() {
     return this.data.map((val) => val.join('\t')).join('\n');
   }
 
   /**
-   * @param {matrix} mtx
+   * @param {Matrix} mtx
    * @returns
    */
   equals(mtx) {
@@ -82,8 +82,8 @@ class Matrix {
 
   /**
    * Matrix multiplication.
-   * @param {matrix|tuple} value
-   * @returns {matrix|tuple}
+   * @param {Matrix|Tuple} value
+   * @returns {Matrix|Tuple}
    */
   multiply(value) {
     if (value instanceof Matrix) {
@@ -120,6 +120,10 @@ class Matrix {
     );
   }
 
+  /**
+   *
+   * @returns {Matrix}
+   */
   transpose() {
     const result = new Matrix(this.size, 0);
     for (let y = 0; y < this.size; y += 1) {
@@ -131,7 +135,7 @@ class Matrix {
 
   /**
    *
-   * returns {number}
+   * @returns {Number}
    */
   get determinant() {
     let result = 0;
@@ -148,9 +152,9 @@ class Matrix {
 
   /**
    *
-   * @param {number} col
-   * @param {number} row
-   * @returns {matrix}
+   * @param {Number} col
+   * @param {Number} row
+   * @returns {Matrix}
    */
   submatrix(col, row) {
     const values = [];
@@ -164,9 +168,9 @@ class Matrix {
 
   /**
    *
-   * @param {number} col
-   * @param {number} row
-   * @returns {number}
+   * @param {Number} col
+   * @param {Number} row
+   * @returns {Number}
    */
   minor(col, row) {
     return this.submatrix(col, row).determinant;
@@ -174,9 +178,9 @@ class Matrix {
 
   /**
    *
-   * @param {number} col
-   * @param {number} row
-   * @returns {number}
+   * @param {Number} col
+   * @param {Number} row
+   * @returns {Number}
    */
   cofactor(col, row) {
     if ((row + col) % 2) return this.minor(col, row) * -1;
@@ -185,7 +189,7 @@ class Matrix {
 
   /**
    *
-   * @returns {boolean}
+   * @returns {Boolean}
    */
   isInvertible() {
     return this.determinant !== 0;
@@ -193,7 +197,7 @@ class Matrix {
 
   /**
    *
-   * @returns {matrix}
+   * @returns {Matrix}
    */
   inverse() {
     if (!this.isInvertible)
@@ -212,7 +216,7 @@ class Matrix {
   }
 
   /**
-   * @returns {matrix}
+   * @returns {Matrix}
    */
   static identityMatrix() {
     return new Matrix([
@@ -222,10 +226,10 @@ class Matrix {
 
   /**
    *
-   * @param {number} x
-   * @param {number} y
-   * @param {number} z
-   * @returns {matrix}
+   * @param {Number} x
+   * @param {Number} y
+   * @param {Number} z
+   * @returns {Matrix}
    */
   static translation(x = 0, y = 0, z = 0) {
     const t = Matrix.identityMatrix();
@@ -237,10 +241,10 @@ class Matrix {
 
   /**
    *
-   * @param {number} x
-   * @param {number} y
-   * @param {number} z
-   * @returns {matrix}
+   * @param {Number} x
+   * @param {Number} y
+   * @param {Number} z
+   * @returns {Matrix}
    */
   static scaling(x = 1, y = 1, z = 1) {
     const s = Matrix.identityMatrix();
@@ -253,7 +257,7 @@ class Matrix {
   /**
    *
    * @param {radians} radians
-   * @returns {matrix}
+   * @returns {Matrix}
    */
   static rotateX(radians) {
     const rx = Matrix.identityMatrix();
@@ -267,7 +271,7 @@ class Matrix {
   /**
    *
    * @param {radians} radians
-   * @returns {matrix}
+   * @returns {Matrix}
    */
   static rotateY(radians) {
     const ry = Matrix.identityMatrix();
@@ -281,7 +285,7 @@ class Matrix {
   /**
    *
    * @param {radians} radians
-   * @returns {matrix}
+   * @returns {Natrix}
    */
   static rotateZ(radians) {
     const rz = Matrix.identityMatrix();
@@ -294,13 +298,13 @@ class Matrix {
 
   /**
    *
-   * @param {number} xy
-   * @param {number} xz
-   * @param {number} yx
-   * @param {number} yz
-   * @param {number} zx
-   * @param {number} zy
-   * @returns {matrix}
+   * @param {Number} xy
+   * @param {Number} xz
+   * @param {Number} yx
+   * @param {Number} yz
+   * @param {Number} zx
+   * @param {Number} zy
+   * @returns {Matrix}
    */
   static shearing(xy, xz, yx, yz, zx, zy) {
     const s = Matrix.identityMatrix();

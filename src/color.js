@@ -20,7 +20,7 @@ class Color {
 
   /**
    * Compares this color to another color and return true if they are the same.
-   * @param {color} col
+   * @param {Color} col
    * @returns
    */
   equal(col) {
@@ -35,8 +35,8 @@ class Color {
 
   /**
    *
-   * @param  {col} color
-   * @returns {color}
+   * @param  {Color} col
+   * @returns {Color}
    */
   add(col) {
     if (!(col instanceof Color))
@@ -50,8 +50,8 @@ class Color {
 
   /**
    *
-   * @param  {color} col
-   * @returns {color}
+   * @param  {Color} col
+   * @returns {Color}
    */
   subtract(col) {
     if (!(col instanceof Color))
@@ -65,8 +65,8 @@ class Color {
 
   /**
    *
-   * @param  {color|number} col
-   * @returns {color}
+   * @param  {Color|Number} col
+   * @returns {Color}
    */
   multiply(col) {
     if (col instanceof Color)

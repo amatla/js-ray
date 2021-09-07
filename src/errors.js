@@ -9,8 +9,8 @@ class RayError extends Error {
 
   /**
    *
-   * @param {string} code
-   * @param {string} message
+   * @param {String} code
+   * @param {String} message
    */
   constructor(code, message) {
     super(message);

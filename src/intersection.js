@@ -4,8 +4,8 @@ const Sphere = require('./shapes/sphere');
 class Intersection {
   /**
    *
-   * @param {number} t
-   * @param {shape} obj
+   * @param {Number} t
+   * @param {Shape} obj
    */
   constructor(t = 0, obj = new Sphere()) {
     this.t = t;
@@ -14,8 +14,8 @@ class Intersection {
 
   /**
    *
-   * @param {intersection[]} intersections
-   * @returns {instrsection|null}
+   * @param {Intersection[]} intersections
+   * @returns {Instrsection|null}
    */
   static hit(intersections) {
     if (!(intersections instanceof Array))

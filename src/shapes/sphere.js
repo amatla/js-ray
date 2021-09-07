@@ -7,8 +7,8 @@ const Tuple = require('../tuple');
 class Sphere {
   /**
    *
-   * @param {tuple} origin
-   * @param {number} radius
+   * @param {Tuple} origin
+   * @param {Number} radius
    */
   constructor(
     origin = Tuple.getPoint(0, 0, 0),
@@ -24,7 +24,7 @@ class Sphere {
 
   /**
    *
-   * @param {matrix} mtx
+   * @param {Matrix} mtx
    */
   setTransform(mtx) {
     if (!(mtx instanceof Matrix))
@@ -34,8 +34,8 @@ class Sphere {
 
   /**
    *
-   * @param {tuple} p
-   * @returns {tuple}
+   * @param {Tuple} p
+   * @returns {Tuple}
    */
   normalAt(p) {
     if (!(p instanceof Tuple || !(p.type === Tuple.Type.Point)))
