@@ -30,14 +30,10 @@ const PointLight = require('../src/pointLight');
       // todo
       const cameraX = -cameraSize / 2 + x * pixelSize;
       const cameraY = cameraSize / 2 - y * pixelSize;
-      const cameraPosition = Tuple.getPoint(
-        cameraX,
-        cameraY,
-        cameraZ,
-      );
+      const pixelPosition = Tuple.getPoint(cameraX, cameraY, cameraZ);
       const r = new Ray(
         rayOrigin,
-        cameraPosition.subtract(rayOrigin).normalize(),
+        pixelPosition.subtract(rayOrigin).normalize(),
       );
       const xs = r.intersect(s);
       const hit = Intersection.hit(xs);
