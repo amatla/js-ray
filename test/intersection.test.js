@@ -1,5 +1,7 @@
 const Sphere = require('../src/shapes/sphere');
 const Intersection = require('../src/intersection');
+const Tuple = require('../src/tuple');
+const Ray = require('../src/ray');
 
 describe('Intersection:', () => {
   test('An intersection encapsulate t and object:', () => {
@@ -52,5 +54,41 @@ describe('Intersection:', () => {
       const i = Intersection.hit(xs);
       expect(i).toEqual(i4);
     });
+  });
+  test('Precomputing the state of an intersection:', () => {
+    const r = new Ray(
+      Tuple.getPoint(0, 0, -5),
+      Tuple.getVector(0, 0, 1),
+    );
+    const s = new Sphere();
+    const i = new Intersection(4, s);
+    const comps = Intersection.computations(i, r);
+    expect(comps.t).toEqual(i.t);
+    expect(comps.object).toEqual(i.object);
+    expect(comps.point).toEqual(Tuple.getPoint(0, 0, -1));
+    expect(comps.eyeV).toEqual(Tuple.getVector(0, 0, -1));
+    expect(comps.normal).toEqual(Tuple.getVector(0, 0, -1));
+  });
+  test('Instersection occurs on the outside:', () => {
+    const r = new Ray(
+      Tuple.getPoint(0, 0, -5),
+      Tuple.getVector(0, 0, 1),
+    );
+    const s = new Sphere();
+    const i = new Intersection(4, s);
+    const comps = Intersection.computations(i, r);
+    expect(comps.inside).toBe(false);
+  });
+  test('Instersection occurs on the inside:', () => {
+    const r = new Ray(
+      Tuple.getPoint(0, 0, 0),
+      Tuple.getVector(0, 0, 1),
+    );
+    const s = new Sphere();
+    const i = new Intersection(1, s);
+    const comps = Intersection.computations(i, r);
+    expect(comps.point).toEqual(Tuple.getPoint(0, 0, 1));
+    expect(comps.eyeV).toEqual(Tuple.getVector(0, 0, -1));
+    expect(comps.inside).toBe(true);
   });
 });

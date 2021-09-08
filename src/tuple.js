@@ -206,7 +206,12 @@ class Tuple {
    * @returns {Tuple}
    */
   negate() {
-    return new Tuple(-this.x, -this.y, -this.z, this.w);
+    return new Tuple(
+      -this.x || 0,
+      -this.y || 0,
+      -this.z || 0,
+      this.w,
+    );
   }
 
   /**

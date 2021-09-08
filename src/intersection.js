@@ -39,6 +39,20 @@ class Intersection {
     }
     return null;
   }
+
+  static computations(i, r) {
+    const comps = {};
+    comps.t = i.t;
+    comps.object = i.object;
+    comps.point = r.position(comps.t);
+    comps.eyeV = r.direction.negate();
+    comps.normal = comps.object.normalAt(comps.point);
+    if (comps.normal.dotProduct(comps.eyeV) < 0) {
+      comps.inside = true;
+      comps.normal = comps.normal.negate();
+    } else comps.inside = false;
+    return comps;
+  }
 }
 
 module.exports = Intersection;
