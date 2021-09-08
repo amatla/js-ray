@@ -4,6 +4,7 @@ const Sphere = require('./shapes/sphere');
 const Tuple = require('./tuple');
 const Matrix = require('./matrix');
 const Ray = require('./ray');
+const Intersection = require('./intersection');
 
 class World {
   constructor(objects = [], light = null) {
@@ -11,12 +12,31 @@ class World {
     this.light = light;
   }
 
+  /**
+   *
+   * @param {Ray} r
+   * @returns {Intersection[]}
+   */
   intersect(r) {
     const xs = [];
     for (let i = 0, n = this.objects.length; i < n; i += 1) {
       xs.push(...r.intersect(this.objects[i]));
     }
     return xs.sort((a, b) => a.t - b.t);
+  }
+
+  /**
+   *
+   * @param {Object} comps
+   * @returns
+   */
+  shadeHit(comps) {
+    return comps.object.material.lighting(
+      this.light,
+      comps.point,
+      comps.eyeV,
+      comps.normal,
+    );
   }
 
   static getDefault() {
@@ -33,5 +53,11 @@ class World {
     return new World([s1, s2], pLight);
   }
 }
+
+const w = World.getDefault();
+w.light = new PointLight(
+  Tuple.getPoint(0, 0.25, 0),
+  new Color(1, 1, 1),
+);
 
 module.exports = World;
