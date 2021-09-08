@@ -22,3 +22,7 @@ by [Jamis Buck](https://github.com/jamis)
     <summary>Chapter 06</summary>
     <img src='./imgs/ch06.jpg' width='512'>
 </details>
+<details>
+    <summary>Chapter 07</summary>
+    <img src='./imgs/ch07.jpg'>
+</details>
