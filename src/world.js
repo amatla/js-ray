@@ -3,7 +3,6 @@ const PointLight = require('./pointLight');
 const Sphere = require('./shapes/sphere');
 const Tuple = require('./tuple');
 const Matrix = require('./matrix');
-const Ray = require('./ray');
 const Intersection = require('./intersection');
 
 class World {
@@ -39,6 +38,23 @@ class World {
     );
   }
 
+  /**
+   *
+   * @param {Ray} r
+   * @returns
+   */
+  colorAt(r) {
+    const xs = this.intersect(r);
+    const hit = Intersection.hit(xs);
+    if (hit === null) return new Color(0, 0, 0);
+    const comps = Intersection.computations(hit, r);
+    return this.shadeHit(comps);
+  }
+
+  /**
+   *
+   * @returns {World}
+   */
   static getDefault() {
     const s1 = new Sphere();
     s1.material.color = new Color(0.8, 1.0, 0.6);
@@ -53,11 +69,5 @@ class World {
     return new World([s1, s2], pLight);
   }
 }
-
-const w = World.getDefault();
-w.light = new PointLight(
-  Tuple.getPoint(0, 0.25, 0),
-  new Color(1, 1, 1),
-);
 
 module.exports = World;

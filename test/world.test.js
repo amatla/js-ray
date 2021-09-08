@@ -71,4 +71,35 @@ describe('World:', () => {
     const c = w.shadeHit(comps);
     expect(c.equal(new Color(0.90498, 0.90498, 0.90498))).toBe(true);
   });
+  test('Color when a ray misses:', () => {
+    const w = World.getDefault();
+    const r = new Ray(
+      Tuple.getPoint(0, 0, -5),
+      Tuple.getVector(0, 1, 0),
+    );
+    const c = w.colorAt(r);
+    expect(c.equal(new Color(0, 0, 0))).toBe(true);
+  });
+  test('Color when a ray hits:', () => {
+    const w = World.getDefault();
+    const r = new Ray(
+      Tuple.getPoint(0, 0, -5),
+      Tuple.getVector(0, 0, 1),
+    );
+    const c = w.colorAt(r);
+    expect(c.equal(new Color(0.38066, 0.47583, 0.2855))).toBe(true);
+  });
+  test('Color whit an intersection behind the ray:', () => {
+    const w = World.getDefault();
+    const outer = w.objects[0];
+    outer.material.ambient = 1;
+    const inner = w.objects[1];
+    inner.material.ambient = 1;
+    const r = new Ray(
+      Tuple.getPoint(0, 0, 0.75),
+      Tuple.getVector(0, 0, -1),
+    );
+    const c = w.colorAt(r);
+    expect(c.equal(inner.material.color)).toBe(true);
+  });
 });
