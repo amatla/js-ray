@@ -1,6 +1,5 @@
 const Color = require('./color');
-const Tuple = require('./tuple');
-const PointLight = require('./pointLight');
+
 /**
  * @class Material
  */
