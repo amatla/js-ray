@@ -69,8 +69,6 @@ class Matrix {
    * @returns
    */
   equals(mtx) {
-    if (!(mtx instanceof Matrix))
-      throw new RayError('ray001', `${mtx} is not a matrix.`);
     if (this.size !== mtx.size) return false;
 
     return this.data.every((row, y) =>
@@ -315,6 +313,40 @@ class Matrix {
     s.data[2][0] = zx;
     s.data[2][1] = zy;
     return s;
+  }
+
+  /**
+   *
+   * @param {Tuple} from
+   * @param {Tuple} to
+   * @param {Tuple} up
+   * @returns {Matrix}
+   */
+  static viewTransform(from, to, up) {
+    const forward = to.subtract(from).normalize();
+    const left = forward.crossProduct(up.normalize());
+    const trueUp = left.crossProduct(forward);
+    const orientantion = new Matrix([
+      left.x,
+      left.y,
+      left.z,
+      0,
+      trueUp.x,
+      trueUp.y,
+      trueUp.z,
+      0,
+      -forward.x,
+      -forward.y,
+      -forward.z,
+      0,
+      0,
+      0,
+      0,
+      1,
+    ]);
+    return orientantion.multiply(
+      Matrix.translation(-from.x, -from.y, -from.z),
+    );
   }
 }
 

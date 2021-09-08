@@ -402,5 +402,43 @@ describe('Matrix:', () => {
         expect(Tuple.compare(t, Tuple.getPoint(15, 0, 7))).toBe(true);
       });
     });
+    describe('View transformation matrix:', () => {
+      test('The transformation matrix for the default orientation:', () => {
+        const from = Tuple.getPoint(0, 0, 0);
+        const to = Tuple.getPoint(0, 0, -1);
+        const up = Tuple.getVector(0, 1, 0);
+        const t = Matrix.viewTransform(from, to, up);
+        expect(t.equals(Matrix.identityMatrix())).toBe(true);
+      });
+      test('The transformation matrix looiking in the positive z direction', () => {
+        const from = Tuple.getPoint(0, 0, 0);
+        const to = Tuple.getPoint(0, 0, 1);
+        const up = Tuple.getVector(0, 1, 0);
+        const t = Matrix.viewTransform(from, to, up);
+        expect(t).toEqual(Matrix.scaling(-1, 1, -1));
+      });
+      test('The view transformation moves the world', () => {
+        const from = Tuple.getPoint(0, 0, 8);
+        const to = Tuple.getPoint(0, 0, 0);
+        const up = Tuple.getVector(0, 1, 0);
+        const t = Matrix.viewTransform(from, to, up);
+        expect(t).toEqual(Matrix.translation(0, 0, -8));
+      });
+      test('An arbitrary view transformation:', () => {
+        const from = Tuple.getPoint(1, 3, 2);
+        const to = Tuple.getPoint(4, -2, 8);
+        const up = Tuple.getVector(1, 1, 0);
+        const t = Matrix.viewTransform(from, to, up);
+        expect(
+          t.equals(
+            new Matrix([
+              -0.50709, 0.50709, 0.67612, -2.36643, 0.76772, 0.60609,
+              0.12122, -2.82843, -0.35857, 0.59761, -0.71714, 0.0,
+              0.0, 0.0, 0.0, 1.0,
+            ]),
+          ),
+        ).toBe(true);
+      });
+    });
   });
 });
