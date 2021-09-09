@@ -76,5 +76,5 @@ const World = require('../src/world');
   );
 
   const cvs = cam.render(scene);
-  cvs.writePPM('./imgs/ch08a.ppm');
+  cvs.writePPM('./imgs/ch08.ppm');
 })();
