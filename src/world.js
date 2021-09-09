@@ -4,6 +4,7 @@ const Sphere = require('./shapes/sphere');
 const Tuple = require('./tuple');
 const Matrix = require('./matrix');
 const Intersection = require('./intersection');
+const Ray = require('./ray');
 
 class World {
   constructor(objects = [], light = null) {
@@ -30,11 +31,14 @@ class World {
    * @returns
    */
   shadeHit(comps) {
+    let isShadow = false;
+    if (this.isShadowed(comps.point)) isShadow = true;
     return comps.object.material.lighting(
       this.light,
       comps.point,
       comps.eyeV,
       comps.normal,
+      isShadow,
     );
   }
 
@@ -67,6 +71,20 @@ class World {
       new Color(1, 1, 1),
     );
     return new World([s1, s2], pLight);
+  }
+
+  /**
+   *
+   * @param {Tuple} p
+   * @returns {Boolean}
+   */
+  isShadowed(p) {
+    const distance = this.light.position.subtract(p);
+    const r = new Ray(p, distance.normalize());
+    const xs = this.intersect(r);
+    const hit = Intersection.hit(xs);
+    if (hit && hit.t < distance.magnitude) return true;
+    return false;
   }
 }
 
