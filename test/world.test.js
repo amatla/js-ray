@@ -102,4 +102,42 @@ describe('World:', () => {
     const c = w.colorAt(r);
     expect(c.equal(inner.material.color)).toBe(true);
   });
+  describe('Shadows:', () => {
+    const w = World.getDefault();
+    test('There is no shadow when nothing is colinear with poin and light:', () => {
+      const p = Tuple.getPoint(0, 10, 0);
+      expect(w.isShadowed(p)).toBe(false);
+    });
+    test('The shadow when an object is between point and light:', () => {
+      const p = Tuple.getPoint(10, -10, 10);
+      expect(w.isShadowed(p)).toBe(true);
+    });
+    test('The shadow when an object is behind the light:', () => {
+      const p = Tuple.getPoint(-20, 20, -20);
+      expect(w.isShadowed(p)).toBe(false);
+    });
+    test('The shadow when an object is behind the point:', () => {
+      const p = Tuple.getPoint(-2, 2, -2);
+      expect(w.isShadowed(p)).toBe(false);
+    });
+    test('shadeHit() is given an intersection in shadow:', () => {
+      const w1 = new World();
+      w.light = new PointLight(
+        Tuple.getPoint(0, 0, -10),
+        new Color(1, 1, 1),
+      );
+      const s1 = new Sphere();
+      const s2 = new Sphere();
+      s2.transform = Matrix.translation(0, 0, 10);
+      w1.objects.push(s1, s2);
+      const r = new Ray(
+        Tuple.getPoint(0, 0, 5),
+        Tuple.getVector(0, 0, 1),
+      );
+      const i = new Intersection(4, s2);
+      const comps = Intersection.computations(i, r);
+      const c = w.shadeHit(comps);
+      expect(c.equal(new Color(0.1, 0.1, 0.1))).toBe(true);
+    });
+  });
 });

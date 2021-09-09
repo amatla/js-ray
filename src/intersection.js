@@ -1,3 +1,4 @@
+const { EPSILON } = require('./constants');
 const RayError = require('./errors');
 const Sphere = require('./shapes/sphere');
 
@@ -51,6 +52,8 @@ class Intersection {
       comps.inside = true;
       comps.normal = comps.normal.negate();
     } else comps.inside = false;
+    const offset = comps.normal.multiply(EPSILON);
+    comps.overPoint = comps.point.add(offset);
     return comps;
   }
 }

@@ -32,10 +32,10 @@ class World {
    */
   shadeHit(comps) {
     let isShadow = false;
-    if (this.isShadowed(comps.point)) isShadow = true;
+    if (this.isShadowed(comps.overPoint)) isShadow = true;
     return comps.object.material.lighting(
       this.light,
-      comps.point,
+      comps.overPoint,
       comps.eyeV,
       comps.normal,
       isShadow,

@@ -2,6 +2,8 @@ const Sphere = require('../src/shapes/sphere');
 const Intersection = require('../src/intersection');
 const Tuple = require('../src/tuple');
 const Ray = require('../src/ray');
+const Matrix = require('../src/matrix');
+const { EPSILON } = require('../src/constants');
 
 describe('Intersection:', () => {
   test('An intersection encapsulate t and object:', () => {
@@ -90,5 +92,17 @@ describe('Intersection:', () => {
     expect(comps.point).toEqual(Tuple.getPoint(0, 0, 1));
     expect(comps.eyeV).toEqual(Tuple.getVector(0, 0, -1));
     expect(comps.inside).toBe(true);
+  });
+  test('The hit should offset the point:', () => {
+    const r = new Ray(
+      Tuple.getPoint(0, 0, -5),
+      Tuple.getVector(0, 0, 1),
+    );
+    const s = new Sphere();
+    s.transform = Matrix.translation(0, 0, 1);
+    const i = new Intersection(5, s);
+    const comps = Intersection.computations(i, r);
+    expect(comps.overPoint.z).toBeLessThan(-EPSILON / 2);
+    expect(comps.point.z).toBeGreaterThan(comps.overPoint.z);
   });
 });

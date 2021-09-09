@@ -1,9 +1,4 @@
-/**
- * define and exports EPSILON for floating point comparison
- */
-
-const EPSILON = 0.00001;
-exports.EPSILON = EPSILON;
+const { EPSILON } = require('./constants');
 
 /**
  *
