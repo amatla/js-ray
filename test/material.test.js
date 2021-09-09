@@ -77,5 +77,22 @@ describe('Material:', () => {
       const result = m.lighting(light, position, eye, normal);
       expect(result).toEqual(new Color(0.1, 0.1, 0.1));
     });
+    test('Lighting witht the surface in shadow:', () => {
+      const eye = Tuple.getVector(0, 0, -1);
+      const normal = Tuple.getVector(0, 0, -1);
+      const light = new PointLight(
+        Tuple.getPoint(0, 0, -10),
+        new Color(1, 1, 1),
+      );
+      const inShadow = true;
+      const result = m.lighting(
+        light,
+        position,
+        eye,
+        normal,
+        inShadow,
+      );
+      expect(result.equal(new Color(0.1, 0.1, 0.1))).toBe(true);
+    });
   });
 });

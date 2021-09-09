@@ -34,7 +34,7 @@ class Material {
    * @param {Tuple} normal
    * @returns {Color}
    */
-  lighting(light, point, eye, normal) {
+  lighting(light, point, eye, normal, inShadow) {
     // combine surface color with the light's color/intensity
     const effectiveColor = this.color.multiply(light.intensity);
 
@@ -43,6 +43,9 @@ class Material {
 
     // compute the ambient contribution
     const ambient = effectiveColor.multiply(this.ambient);
+
+    // if in shadow ignore diffuse and specular contribution
+    if (inShadow) return ambient;
 
     // lightNDot represents the cosine of the angle between the
     // light vector and the normal vector. A negative number means the
