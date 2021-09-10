@@ -28,7 +28,7 @@ const Intersection = require('../src/intersection');
         rayOrigin,
         pixelPosition.subtract(rayOrigin).normalize(),
       );
-      const xs = r.intersect(s);
+      const xs = s.intersect(r);
       if (Intersection.hit(xs)) cvs.writePixel(x, y, col);
     }
   }

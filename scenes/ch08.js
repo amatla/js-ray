@@ -63,7 +63,7 @@ const World = require('../src/world');
     new Color(1, 1, 1),
   );
 
-  const cam = new Camera(640, 360, Math.PI / 3);
+  const cam = new Camera(100, 50, Math.PI / 3);
   cam.transform = Matrix.viewTransform(
     Tuple.getPoint(0, 1.5, -5),
     Tuple.getPoint(0, 1, 0),

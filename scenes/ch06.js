@@ -35,7 +35,7 @@ const PointLight = require('../src/pointLight');
         rayOrigin,
         pixelPosition.subtract(rayOrigin).normalize(),
       );
-      const xs = r.intersect(s);
+      const xs = s.intersect(r);
       const hit = Intersection.hit(xs);
       if (hit) {
         const hitPosition = r.position(hit.t);

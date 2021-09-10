@@ -1,10 +1,6 @@
-const Canvas = require('../src/canvas');
 const Tuple = require('../src/tuple');
 const Color = require('../src/color');
-const Ray = require('../src/ray');
 const Sphere = require('../src/shapes/sphere');
-const Material = require('../src/material');
-const Intersection = require('../src/intersection');
 const PointLight = require('../src/pointLight');
 const Matrix = require('../src/matrix');
 const Camera = require('../src/camera');
@@ -67,7 +63,7 @@ const World = require('../src/world');
     new Color(1, 1, 1),
   );
 
-  const cam = new Camera(640, 360, Math.PI / 3);
+  const cam = new Camera(100, 50, Math.PI / 3);
   cam.transform = Matrix.viewTransform(
     Tuple.getPoint(0, 1.5, -5),
     Tuple.getPoint(0, 1, 0),
