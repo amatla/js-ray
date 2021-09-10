@@ -20,7 +20,7 @@ class World {
   intersect(r) {
     const xs = [];
     for (let i = 0, n = this.objects.length; i < n; i += 1) {
-      xs.push(...r.intersect(this.objects[i]));
+      xs.push(...this.objects[i].intersect(r));
     }
     return xs.sort((a, b) => a.t - b.t);
   }

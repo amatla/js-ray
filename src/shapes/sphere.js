@@ -1,35 +1,26 @@
 const { v4: uuidv4 } = require('uuid');
+const Shape = require('./shape');
 const RayError = require('../errors');
-const Material = require('../material');
 const Matrix = require('../matrix');
 const Tuple = require('../tuple');
+const Intersection = require('../intersection');
 
-class Sphere {
+/**
+ *
+ * @class Sphere
+ */
+class Sphere extends Shape {
   /**
    *
    * @param {Tuple} origin
    * @param {Number} radius
    */
-  constructor(
-    origin = Tuple.getPoint(0, 0, 0),
-    radius = 1,
-    material = new Material(),
-  ) {
+  constructor(origin = Tuple.getPoint(0, 0, 0), radius = 1) {
+    super();
     this.uuid = uuidv4();
     this.origin = origin;
     this.radius = radius;
-    this.material = material;
     this.transform = Matrix.identityMatrix();
-  }
-
-  /**
-   *
-   * @param {Matrix} mtx
-   */
-  setTransform(mtx) {
-    if (!(mtx instanceof Matrix))
-      throw new RayError('ray001', `${mtx} is not of type Matrix.`);
-    this.transform = this.transform.multiply(mtx);
   }
 
   /**
@@ -37,20 +28,28 @@ class Sphere {
    * @param {Tuple} p
    * @returns {Tuple}
    */
-  normalAt(p) {
+  localNormalAt(p) {
     if (!(p instanceof Tuple || !(p.type === Tuple.Type.Point)))
       throw new RayError('ray001', `${p} is not a point.`);
-    // transform point to obj coordinates
-    const objP = this.transform.inverse().multiply(p);
-    // calculate the normal in object space
-    const objN = objP.subtract(this.origin);
-    // calculate the normal in world space
-    const worldN = this.transform
-      .inverse()
-      .transpose()
-      .multiply(objN);
-    worldN.w = 0;
-    return worldN.normalize();
+    const objN = p.subtract(this.origin);
+    return objN;
+  }
+
+  /**
+   *
+   * @param {Ray} ray - ray in object space
+   * @returns {Intersection[]|[]}
+   */
+  intersectLocal(ray) {
+    const sToRay = ray.origin.subtract(this.origin);
+    const a = ray.direction.dotProduct(ray.direction);
+    const b = 2 * ray.direction.dotProduct(sToRay);
+    const c = sToRay.dotProduct(sToRay) - 1;
+    const disc = b ** 2 - 4 * a * c;
+    if (disc < 0) return [];
+    const t1 = (-b - Math.sqrt(disc)) / (2 * a);
+    const t2 = (-b + Math.sqrt(disc)) / (2 * a);
+    return [new Intersection(t1, this), new Intersection(t2, this)];
   }
 }
 

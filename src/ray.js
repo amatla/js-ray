@@ -1,6 +1,5 @@
 const RayError = require('./errors');
 const Tuple = require('./tuple');
-const Intersection = require('./intersection');
 const Matrix = require('./matrix');
 
 class Ray {
@@ -41,18 +40,18 @@ class Ray {
    * @param {Shape} s
    * @returns {Intersection[]|[]}
    */
-  intersect(s) {
-    const rt = this.transform(s.transform.inverse());
-    const sToRay = rt.origin.subtract(s.origin);
-    const a = rt.direction.dotProduct(rt.direction);
-    const b = 2 * rt.direction.dotProduct(sToRay);
-    const c = sToRay.dotProduct(sToRay) - 1;
-    const disc = b ** 2 - 4 * a * c;
-    if (disc < 0) return [];
-    const t1 = (-b - Math.sqrt(disc)) / (2 * a);
-    const t2 = (-b + Math.sqrt(disc)) / (2 * a);
-    return [new Intersection(t1, s), new Intersection(t2, s)];
-  }
+  // intersect(s) {
+  //   const rt = this.transform(s.transform.inverse());
+  //   const sToRay = rt.origin.subtract(s.origin);
+  //   const a = rt.direction.dotProduct(rt.direction);
+  //   const b = 2 * rt.direction.dotProduct(sToRay);
+  //   const c = sToRay.dotProduct(sToRay) - 1;
+  //   const disc = b ** 2 - 4 * a * c;
+  //   if (disc < 0) return [];
+  //   const t1 = (-b - Math.sqrt(disc)) / (2 * a);
+  //   const t2 = (-b + Math.sqrt(disc)) / (2 * a);
+  //   return [new Intersection(t1, s), new Intersection(t2, s)];
+  // }
 
   /**
    *

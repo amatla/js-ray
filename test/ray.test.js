@@ -28,7 +28,7 @@ describe('Ray:', () => {
         Tuple.getVector(0, 0, 1),
       );
       const s = new Sphere();
-      const xs = r.intersect(s);
+      const xs = s.intersect(r);
       expect(xs.length).toBe(2);
       expect(xs[0].t).toBe(4);
       expect(xs[1].t).toBe(6);
@@ -39,7 +39,7 @@ describe('Ray:', () => {
         Tuple.getVector(0, 0, 1),
       );
       const s = new Sphere();
-      const xs = r.intersect(s);
+      const xs = s.intersect(r);
       expect(xs.length).toBe(2);
       expect(xs[0].t).toBe(5);
       expect(xs[1].t).toBe(5);
@@ -50,7 +50,7 @@ describe('Ray:', () => {
         Tuple.getVector(0, 0, 1),
       );
       const s = new Sphere();
-      const xs = r.intersect(s);
+      const xs = s.intersect(r);
       expect(xs.length).toBe(0);
     });
     test('A ray originates inside a sphere:', () => {
@@ -59,7 +59,7 @@ describe('Ray:', () => {
         Tuple.getVector(0, 0, 1),
       );
       const s = new Sphere();
-      const xs = r.intersect(s);
+      const xs = s.intersect(r);
       expect(xs.length).toBe(2);
       expect(xs[0].t).toBe(-1);
       expect(xs[1].t).toBe(1);
@@ -70,7 +70,7 @@ describe('Ray:', () => {
         Tuple.getVector(0, 0, 1),
       );
       const s = new Sphere();
-      const xs = r.intersect(s);
+      const xs = s.intersect(r);
       expect(xs.length).toBe(2);
       expect(xs[0].t).toBe(-6);
       expect(xs[1].t).toBe(-4);
@@ -81,7 +81,7 @@ describe('Ray:', () => {
         Tuple.getVector(0, 0, 1),
       );
       const s = new Sphere();
-      const xs = r.intersect(s);
+      const xs = s.intersect(r);
       expect(xs.length).toBe(2);
       expect(xs[0].object).toEqual(s);
       expect(xs[1].object).toEqual(s);

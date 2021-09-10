@@ -1,6 +1,5 @@
 const { EPSILON } = require('./constants');
 const RayError = require('./errors');
-const Sphere = require('./shapes/sphere');
 
 class Intersection {
   /**
@@ -8,7 +7,7 @@ class Intersection {
    * @param {Number} t
    * @param {Shape} obj
    */
-  constructor(t = 0, obj = new Sphere()) {
+  constructor(t = 0, obj = {}) {
     this.t = t;
     this.object = obj;
   }

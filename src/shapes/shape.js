@@ -55,8 +55,11 @@ class Shape {
    * @returns {Tuple} - the normalized normal at point pt.
    */
   normalAt(pt) {
+    // transform point to obj coordinates
     const localPt = this.transform.inverse().multiply(pt);
+    // calculate the normal in object space
     const localN = this.localNormalAt(localPt);
+    // calculate the normal in world space
     const worldN = this.transform
       .inverse()
       .transpose()

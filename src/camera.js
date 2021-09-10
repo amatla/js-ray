@@ -2,6 +2,7 @@ const Ray = require('./ray');
 const Matrix = require('./matrix');
 const Tuple = require('./tuple');
 const Canvas = require('./canvas');
+const World = require('./world');
 
 /**
  * @class Camera
@@ -82,4 +83,11 @@ class Camera {
   }
 }
 
+const w = World.getDefault();
+const c = new Camera(11, 11, Math.PI / 2);
+const from = Tuple.getPoint(0, 0, -5);
+const to = Tuple.getPoint(0, 0, 0);
+const up = Tuple.getVector(0, 1, 0);
+c.transform = Matrix.viewTransform(from, to, up);
+const img = c.render(w);
 module.exports = Camera;
