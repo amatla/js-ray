@@ -1,7 +1,5 @@
-const { v4: uuidv4 } = require('uuid');
 const Shape = require('./shape');
 const RayError = require('../errors');
-const Matrix = require('../matrix');
 const Tuple = require('../tuple');
 const Intersection = require('../intersection');
 
@@ -17,10 +15,8 @@ class Sphere extends Shape {
    */
   constructor(origin = Tuple.getPoint(0, 0, 0), radius = 1) {
     super();
-    this.uuid = uuidv4();
     this.origin = origin;
     this.radius = radius;
-    this.transform = Matrix.identityMatrix();
   }
 
   /**

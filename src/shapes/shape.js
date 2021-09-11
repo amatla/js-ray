@@ -1,3 +1,4 @@
+const { v4: uuidv4 } = require('uuid');
 const Matrix = require('../matrix');
 const Material = require('../material');
 const RayError = require('../errors');
@@ -13,6 +14,7 @@ class Shape {
    * @param {Material} material
    */
   constructor(material = new Material()) {
+    this.uuid = uuidv4();
     this.material = material;
     this.transform = Matrix.identityMatrix();
     if (this.constructor === Shape)
