@@ -26,3 +26,11 @@ by [Jamis Buck](https://github.com/jamis)
     <summary>Chapter 07</summary>
     <img src='./imgs/ch07.jpg'>
 </details>
+<details>
+    <summary>Chapter 08</summary>
+    <img src='./imgs/ch08.jpg'>
+</details>
+<details>
+    <summary>Chapter 09</summary>
+    <img src='./imgs/ch09.jpg'>
+</details>
