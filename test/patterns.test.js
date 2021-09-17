@@ -1,6 +1,8 @@
 const Color = require('../src/color');
 const Tuple = require('../src/tuple');
 const StripePattern = require('../src/patterns/stripe');
+const Gradient = require('../src/patterns/gradient');
+const RingPattern = require('../src/patterns/ring');
 const Material = require('../src/material');
 const PointLight = require('../src/pointLight');
 const Sphere = require('../src/shapes/sphere');
@@ -120,6 +122,40 @@ describe('Patterns:', () => {
         Tuple.getPoint(1.5, 0, 0),
       );
       expect(c).toEqual(Color.WHITE);
+    });
+  });
+  describe('Gradient:', () => {
+    test('A gradient linearly interpolates between colors:', () => {
+      const pattern = new Gradient(Color.WHITE, Color.BLACK);
+      expect(pattern.patternAt(Tuple.getPoint(0, 0, 0))).toEqual(
+        Color.WHITE,
+      );
+      expect(pattern.patternAt(Tuple.getPoint(0.25, 0, 0))).toEqual(
+        new Color(0.75, 0.75, 0.75),
+      );
+      expect(pattern.patternAt(Tuple.getPoint(0.5, 0, 0))).toEqual(
+        new Color(0.5, 0.5, 0.5),
+      );
+      expect(pattern.patternAt(Tuple.getPoint(0.75, 0, 0))).toEqual(
+        new Color(0.25, 0.25, 0.25),
+      );
+    });
+  });
+  describe('Ring:', () => {
+    test('A ring should extend in both x and z:', () => {
+      const p = new RingPattern(Color.WHITE, Color.BLACK);
+      expect(p.patternAt(Tuple.getPoint(0, 0, 0))).toEqual(
+        Color.WHITE,
+      );
+      expect(p.patternAt(Tuple.getPoint(1, 0, 0))).toEqual(
+        Color.BLACK,
+      );
+      expect(p.patternAt(Tuple.getPoint(0, 0, 1))).toEqual(
+        Color.BLACK,
+      );
+      expect(p.patternAt(Tuple.getPoint(0.708, 0, 0.708))).toEqual(
+        Color.BLACK,
+      );
     });
   });
 });

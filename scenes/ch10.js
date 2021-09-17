@@ -7,6 +7,7 @@ const Camera = require('../src/camera');
 const World = require('../src/world');
 const Plane = require('../src/shapes/plane');
 const StripePattern = require('../src/patterns/stripe');
+const Gradient = require('../src/patterns/gradient');
 
 (function () {
   // scene objects
@@ -39,9 +40,12 @@ const StripePattern = require('../src/patterns/stripe');
   right.transform = Matrix.translation(1.5, 0.5, -0.5).multiply(
     Matrix.scaling(0.5, 0.5, 0.5),
   );
-  right.material.color = new Color(0.69, 0, 0.16);
-  right.material.diffuse = 0.7;
-  right.material.specular = 0.3;
+  right.material.pattern = new Gradient(
+    new Color(0.8, 0.13, 0.18),
+    new Color(0.52, 0.87, 0.01),
+  );
+  right.material.pattern.setTransform(Matrix.scaling(0.6, 0.6, 0.6));
+  right.material.pattern.setTransform(Matrix.rotateZ(Math.PI / 2));
 
   const left = new Sphere();
   left.transform = Matrix.translation(-1.5, 0.33, -0.75).multiply(
