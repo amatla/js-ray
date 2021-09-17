@@ -34,6 +34,7 @@ class World {
     let isShadow = false;
     if (this.isShadowed(comps.overPoint)) isShadow = true;
     return comps.object.material.lighting(
+      comps.object,
       this.light,
       comps.overPoint,
       comps.eyeV,

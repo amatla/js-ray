@@ -2,6 +2,7 @@ const Material = require('../src/material');
 const Color = require('../src/color');
 const Tuple = require('../src/tuple');
 const PointLight = require('../src/pointLight');
+const Sphere = require('../src/shapes/sphere');
 
 describe('Material:', () => {
   test('The default material:', () => {
@@ -15,6 +16,7 @@ describe('Material:', () => {
   describe('Lighting:', () => {
     const m = new Material();
     const position = Tuple.getPoint(0, 0, 0);
+    const s = new Sphere();
     test('Lighting with eye between light and surface:', () => {
       const eye = Tuple.getVector(0, 0, -1);
       const normal = Tuple.getVector(0, 0, -1);
@@ -22,7 +24,7 @@ describe('Material:', () => {
         Tuple.getPoint(0, 0, -10),
         new Color(1, 1, 1),
       );
-      const result = m.lighting(light, position, eye, normal);
+      const result = m.lighting(s, light, position, eye, normal);
       expect(result).toEqual(new Color(1.9, 1.9, 1.9));
     });
     test('Lighting with eye between light and surface, eye offset 45 degrees:', () => {
@@ -36,7 +38,7 @@ describe('Material:', () => {
         Tuple.getPoint(0, 0, -10),
         new Color(1, 1, 1),
       );
-      const result = m.lighting(light, position, eye, normal);
+      const result = m.lighting(s, light, position, eye, normal);
       expect(result).toEqual(new Color(1, 1, 1));
     });
     test('Lighting with eye opposite surface, light offset 45 degrees:', () => {
@@ -46,7 +48,7 @@ describe('Material:', () => {
         Tuple.getPoint(0, 10, -10),
         new Color(1, 1, 1),
       );
-      const result = m.lighting(light, position, eye, normal);
+      const result = m.lighting(s, light, position, eye, normal);
       expect(result.equal(new Color(0.7364, 0.7364, 0.7364))).toBe(
         true,
       );
@@ -62,7 +64,7 @@ describe('Material:', () => {
         Tuple.getPoint(0, 10, -10),
         new Color(1, 1, 1),
       );
-      const result = m.lighting(light, position, eye, normal);
+      const result = m.lighting(s, light, position, eye, normal);
       expect(result.equal(new Color(1.6364, 1.6364, 1.6364))).toBe(
         true,
       );
@@ -74,7 +76,7 @@ describe('Material:', () => {
         Tuple.getPoint(0, 0, 10),
         new Color(1, 1, 1),
       );
-      const result = m.lighting(light, position, eye, normal);
+      const result = m.lighting(s, light, position, eye, normal);
       expect(result).toEqual(new Color(0.1, 0.1, 0.1));
     });
     test('Lighting witht the surface in shadow:', () => {
@@ -86,6 +88,7 @@ describe('Material:', () => {
       );
       const inShadow = true;
       const result = m.lighting(
+        s,
         light,
         position,
         eye,

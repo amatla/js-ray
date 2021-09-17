@@ -24,6 +24,7 @@ class Material {
     this.diffuse = diffuse;
     this.specular = specular;
     this.shininess = shininess;
+    this.pattern = null;
   }
 
   /**
@@ -34,9 +35,13 @@ class Material {
    * @param {Tuple} normal
    * @returns {Color}
    */
-  lighting(light, point, eye, normal, inShadow) {
+  lighting(shape, light, point, eye, normal, inShadow) {
     // combine surface color with the light's color/intensity
-    const effectiveColor = this.color.multiply(light.intensity);
+    let color;
+    if (this.pattern)
+      color = this.pattern.patternAtShape(shape, point);
+    else color = this.color;
+    const effectiveColor = color.multiply(light.intensity);
 
     // find the direction to the light source
     const lightV = light.position.subtract(point).normalize();
