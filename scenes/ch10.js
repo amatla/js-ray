@@ -8,6 +8,8 @@ const World = require('../src/world');
 const Plane = require('../src/shapes/plane');
 const StripePattern = require('../src/patterns/stripe');
 const Gradient = require('../src/patterns/gradient');
+const RingPattern = require('../src/patterns/ring');
+const Checker = require('../src/patterns/checker');
 
 (function () {
   // scene objects
@@ -23,16 +25,23 @@ const Gradient = require('../src/patterns/gradient');
   backWall.setTransform(
     Matrix.translation(0, 0, 3).multiply(Matrix.rotateX(Math.PI / 2)),
   );
-  backWall.material.pattern = new StripePattern(
+  backWall.material.pattern = new RingPattern(
     new Color(0.67, 0.15, 0.31),
     new Color(0.94, 0.97, 1),
   );
   backWall.material.specular = 0;
+  backWall.material.pattern.setTransform(
+    Matrix.scaling(0.8, 0.8, 0.8),
+  );
 
   // Spheres
   const middle = new Sphere();
   middle.transform = Matrix.translation(-0.5, 1, 0.5);
-  middle.material.color = new Color(1, 0.75, 0);
+  middle.material.pattern = new Checker(
+    new Color(0.89, 0.93, 0.96),
+    new Color(0.75, 0.8, 1),
+  );
+  middle.material.pattern.setTransform(Matrix.scaling(0.8, 0.8, 0.8));
   middle.material.diffuse = 0.7;
   middle.material.specular = 0.3;
 
