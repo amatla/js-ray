@@ -7,6 +7,7 @@ const Material = require('../src/material');
 const PointLight = require('../src/pointLight');
 const Sphere = require('../src/shapes/sphere');
 const Matrix = require('../src/matrix');
+const Checker = require('../src/patterns/checker');
 
 describe('Patterns:', () => {
   describe('Stripe:', () => {
@@ -154,6 +155,44 @@ describe('Patterns:', () => {
         Color.BLACK,
       );
       expect(p.patternAt(Tuple.getPoint(0.708, 0, 0.708))).toEqual(
+        Color.BLACK,
+      );
+    });
+  });
+  describe('Checker:', () => {
+    test('Checker should repeat in x:', () => {
+      const pattern = new Checker(Color.WHITE, Color.BLACK);
+      expect(pattern.patternAt(Tuple.getPoint(0, 0, 0))).toEqual(
+        Color.WHITE,
+      );
+      expect(pattern.patternAt(Tuple.getPoint(0.99, 0, 0))).toEqual(
+        Color.WHITE,
+      );
+      expect(pattern.patternAt(Tuple.getPoint(1.01, 0, 0))).toEqual(
+        Color.BLACK,
+      );
+    });
+    test('Checker should repeat in y:', () => {
+      const pattern = new Checker(Color.WHITE, Color.BLACK);
+      expect(pattern.patternAt(Tuple.getPoint(0, 0, 0))).toEqual(
+        Color.WHITE,
+      );
+      expect(pattern.patternAt(Tuple.getPoint(0, 0.99, 0))).toEqual(
+        Color.WHITE,
+      );
+      expect(pattern.patternAt(Tuple.getPoint(0, 1.01, 0))).toEqual(
+        Color.BLACK,
+      );
+    });
+    test('Checker should repeat in z:', () => {
+      const pattern = new Checker(Color.WHITE, Color.BLACK);
+      expect(pattern.patternAt(Tuple.getPoint(0, 0, 0))).toEqual(
+        Color.WHITE,
+      );
+      expect(pattern.patternAt(Tuple.getPoint(0, 0, 0.99))).toEqual(
+        Color.WHITE,
+      );
+      expect(pattern.patternAt(Tuple.getPoint(0, 0, 1.01))).toEqual(
         Color.BLACK,
       );
     });
